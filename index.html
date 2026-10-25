@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Harry — Bio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#36618E; --on-primary:#FFFFFF; --primary-c:#D1E4FF; --on-primary-c:#001D36;
+  --secondary-c:#D7E3F8; --on-secondary-c:#101C2B;
+  --tertiary-c:#F2DAFF; --on-tertiary-c:#251431;
+  --surface:#F8F9FF; --sc-low:#F2F3FA; --sc:#ECEEF4; --sc-high:#E6E8EE;
+  --on-surface:#191C20; --on-variant:#43474E; --outline:#73777F; --outline-v:#C3C7CF;
+  --e1:0 1px 2px rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);
+  --e3:0 1px 3px rgba(0,0,0,.3),0 4px 8px 3px rgba(0,0,0,.15);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --primary:#A0CAFD; --on-primary:#00325B; --primary-c:#1F4975; --on-primary-c:#D1E4FF;
+    --secondary-c:#3B4858; --on-secondary-c:#D7E3F8;
+    --tertiary-c:#52405F; --on-tertiary-c:#F2DAFF;
+    --surface:#101418; --sc-low:#191C20; --sc:#1D2024; --sc-high:#272A2F;
+    --on-surface:#E1E2E8; --on-variant:#C3C7CF; --outline:#8D9199; --outline-v:#43474E;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --primary:#A0CAFD; --on-primary:#00325B; --primary-c:#1F4975; --on-primary-c:#D1E4FF;
+  --secondary-c:#3B4858; --on-secondary-c:#D7E3F8;
+  --tertiary-c:#52405F; --on-tertiary-c:#F2DAFF;
+  --surface:#101418; --sc-low:#191C20; --sc:#1D2024; --sc-high:#272A2F;
+  --on-surface:#E1E2E8; --on-variant:#C3C7CF; --outline:#8D9199; --outline-v:#43474E;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--on-surface);font:400 16px/24px Roboto,system-ui,sans-serif;letter-spacing:.03em;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:20}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+svg.i{width:24px;height:24px;fill:currentColor;flex:none}
+
+/* Top app bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);height:64px;display:flex;align-items:center;gap:12px;padding:0 16px;transition:background .3s}
+.bar h1{font:400 22px/28px Roboto,sans-serif;margin:0;flex:1;letter-spacing:0}
+.bar img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+
+/* M3 switch */
+.switch{position:relative;width:52px;height:32px;border-radius:16px;border:2px solid var(--outline);background:var(--sc-high);cursor:pointer;padding:0;transition:background .2s,border-color .2s}
+.switch .th{position:absolute;top:50%;left:6px;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--outline);display:grid;place-items:center;color:var(--sc-high);transition:all .25s cubic-bezier(.2,0,0,1)}
+.switch .th svg{width:12px;height:12px;opacity:0;transition:opacity .2s}
+:root[data-theme="dark"] .switch{background:var(--primary);border-color:var(--primary)}
+:root[data-theme="dark"] .switch .th{left:24px;width:24px;height:24px;margin-top:-12px;background:var(--on-primary);color:var(--primary)}
+:root[data-theme="dark"] .switch .th svg{opacity:1}
+
+.wrap{max-width:880px;margin:0 auto;padding:8px 16px 120px;display:grid;gap:16px}
+
+/* Buttons & state layers */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 24px;border-radius:20px;border:0;font:500 14px Roboto,sans-serif;letter-spacing:.1px;text-decoration:none;cursor:pointer;color:inherit;background:none}
+.btn::after,.item::after,.fab::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .15s;pointer-events:none}
+.btn:hover::after,.item:hover::after,.fab:hover::after{opacity:.08}
+.btn:active::after,.item:active::after,.fab:active::after{opacity:.12}
+.btn.filled{background:var(--primary);color:var(--on-primary)}
+.btn.filled:hover{box-shadow:var(--e1)}
+.btn.tonal{background:var(--secondary-c);color:var(--on-secondary-c)}
+.ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.2;transform:scale(0);animation:rp .5s ease-out forwards;pointer-events:none}
+@keyframes rp{to{transform:scale(1);opacity:0}}
+
+/* Hero */
+.hero{background:var(--primary-c);color:var(--on-primary-c);border-radius:28px;padding:32px 24px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;animation:rise .5s cubic-bezier(.2,0,0,1) both}
+@keyframes rise{from{transform:translateY(16px);opacity:0}}
+.photo{width:136px;height:136px;border-radius:50%;object-fit:cover;box-shadow:var(--e3)}
+.hero .name{font:400 clamp(40px,8vw,57px)/1.1 Roboto,sans-serif;letter-spacing:-.25px;margin:0}
+.hero .role{font:400 18px/28px Roboto;margin:4px 0 20px;opacity:.85}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.hero .btn.filled{background:var(--on-primary-c);color:var(--primary-c)}
+.hero .btn.tonal{background:rgba(255,255,255,.35);color:var(--on-primary-c)}
+
+/* Cards */
+.card{background:var(--sc-low);border-radius:24px;padding:24px;border:1px solid var(--outline-v);transition:background .3s}
+.card h2{font:400 22px/28px Roboto,sans-serif;margin:0 0 12px;letter-spacing:0}
+.card p{margin:0 0 12px;color:var(--on-variant);max-width:62ch}
+.card p.lead{font-size:20px;line-height:30px;color:var(--on-surface)}
+.card p:last-child{margin:0}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stat{border-radius:24px;padding:20px;display:grid;gap:4px}
+.stat:nth-child(1){background:var(--secondary-c);color:var(--on-secondary-c)}
+.stat:nth-child(2){background:var(--tertiary-c);color:var(--on-tertiary-c)}
+.stat:nth-child(3){background:var(--primary-c);color:var(--on-primary-c)}
+.stat b{font:400 45px/52px Roboto;letter-spacing:0}
+.stat span{font-size:14px}
+
+/* Lists */
+.list{display:grid;margin:0 -8px}
+.item{position:relative;overflow:hidden;display:flex;gap:16px;align-items:center;padding:12px 16px;border-radius:16px;text-decoration:none;color:inherit;min-height:72px}
+.lead-i{width:40px;height:40px;border-radius:50%;background:var(--secondary-c);color:var(--on-secondary-c);display:grid;place-items:center;flex:none}
+.item.cur .lead-i{background:var(--primary);color:var(--on-primary)}
+.txt{flex:1;min-width:0}
+.txt b{display:block;font:500 16px/24px Roboto;letter-spacing:.15px}
+.txt span{display:block;font-size:14px;line-height:20px;color:var(--on-variant);letter-spacing:.25px}
+.trail{font-size:12px;color:var(--on-variant);align-self:flex-start;padding-top:4px;white-space:nowrap}
+a.item .go{color:var(--on-variant)}
+
+/* Chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{height:32px;display:inline-flex;align-items:center;padding:0 16px;border-radius:8px;border:1px solid var(--outline);font:500 14px Roboto;letter-spacing:.1px;color:var(--on-variant)}
+.chip.sel{background:var(--secondary-c);color:var(--on-secondary-c);border-color:transparent}
+
+/* FAB */
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;overflow:hidden;display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 20px;border-radius:16px;background:var(--tertiary-c);color:var(--on-tertiary-c);font:500 14px Roboto;letter-spacing:.1px;text-decoration:none;box-shadow:var(--e3)}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr;padding:24px 20px}
+  .photo{width:104px;height:104px}
+  .stats{grid-template-columns:1fr}
+  .stat{grid-template-columns:auto 1fr;align-items:center;gap:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ripple{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mail" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></symbol>
+  <symbol id="work" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 0h-4V4h4v2z"/></symbol>
+  <symbol id="school" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z"/></symbol>
+  <symbol id="brush" viewBox="0 0 24 24"><path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.37-1.34-1.34a.996.996 0 0 0-1.41 0L9 12.25 11.75 15l8.96-8.96a.996.996 0 0 0 0-1.41z"/></symbol>
+  <symbol id="link" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></symbol>
+  <symbol id="go" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></symbol>
+</svg>
+
+<header class="bar">
+  <img src="avatar.webp" alt="" width="36" height="36">
+  <h1>Minh Anh</h1>
+  <button class="switch" id="theme" type="button" role="switch" aria-checked="false" aria-label="Chế độ tối">
+    <span class="th"><svg class="i"><use href="#check"/></svg></span>
+  </button>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <img class="photo" src="avatar.webp" alt="Ảnh đại diện của Minh Anh" width="136" height="136">
+    <div>
+      <h2 class="name">Minh Anh</h2>
+      <p class="role">Nhà thiết kế sản phẩm & họa sĩ minh họa, Hà Nội</p>
+      <div class="actions">
+        <a class="btn filled" href="mailto:minhanh@example.com">Liên hệ</a>
+        <a class="btn tonal" href="#links">Xem liên kết</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Giới thiệu</h2>
+    <p class="lead">Mình làm ra những sản phẩm số dễ dùng và có chút tính cách, từ ứng dụng ngân hàng đến sách tranh cho trẻ em.</p>
+    <p>Mình tin thiết kế tốt là thứ người dùng không phải nghĩ nhiều. Ngoài giờ làm, mình vẽ tay, pha cà phê phin và đi bộ quanh Hồ Tây mỗi sáng.</p>
+  </section>
+
+  <section class="stats" aria-label="Con số nổi bật">
+    <div class="stat"><b>8</b><span>năm làm nghề</span></div>
+    <div class="stat"><b>40+</b><span>dự án đã ra mắt</span></div>
+    <div class="stat"><b>3</b><span>cuốn sách minh họa</span></div>
+  </section>
+
+  <section class="card">
+    <h2>Hành trình</h2>
+    <div class="list">
+      <div class="item cur"><div class="lead-i"><svg class="i"><use href="#work"/></svg></div><div class="txt"><b>Lead Product Designer</b><span>Lotus Pay · nhóm 6 người, 2 triệu người dùng</span></div><div class="trail">2023 – nay</div></div>
+      <div class="item"><div class="lead-i"><svg class="i"><use href="#work"/></svg></div><div class="txt"><b>Product Designer</b><span>Mây Studio · giáo dục và thương mại điện tử</span></div><div class="trail">2019 – 2023</div></div>
+      <div class="item"><div class="lead-i"><svg class="i"><use href="#brush"/></svg></div><div class="txt"><b>Họa sĩ minh họa tự do</b><span>Sách thiếu nhi, bao bì, poster</span></div><div class="trail">2016 – 2019</div></div>
+      <div class="item"><div class="lead-i"><svg class="i"><use href="#school"/></svg></div><div class="txt"><b>ĐH Mỹ thuật Công nghiệp</b><span>Thiết kế đồ họa</span></div><div class="trail">2012 – 2016</div></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Kỹ năng</h2>
+    <div class="chips">
+      <span class="chip sel">Thiết kế giao diện</span><span class="chip sel">Nghiên cứu người dùng</span>
+      <span class="chip sel">Design system</span><span class="chip">Figma</span>
+      <span class="chip">Minh họa tay</span><span class="chip">Hoạt họa chuyển động</span>
+      <span class="chip">HTML & CSS</span><span class="chip">Mentoring</span>
+    </div>
+  </section>
+
+  <section class="card" id="links">
+  <style>
+    .soc{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;font:700 13px Roboto,sans-serif;letter-spacing:0;color:#fff}
+    .soc.ig{background:linear-gradient(45deg,#F9A03F,#E1306C,#8A3AB9)}
+    .soc.tt{background:#111;color:#fff}
+    .soc.dc{background:#5865F2}
+    .soc.fb{background:#1877F2}
+    .soc.yt{background:#E53935}
+    .soc.gh{background:#24292F}
+    .soc.tg{background:#229ED9}
+    .soc.li{background:#0A66C2}
+    .soc.web{background:var(--primary);color:var(--on-primary)}
+  </style>
+  <h2>Kết nối</h2>
+  <nav class="list" aria-label="Liên kết">
+    <a class="item" href="https://minhanh.design" target="_blank" rel="noopener"><div class="soc web"><svg class="i"><use href="#link"/></svg></div><div class="txt"><b>Portfolio</b><span>minhanh.design</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://instagram.com/minhanh.draws" target="_blank" rel="noopener"><div class="soc ig">IG</div><div class="txt"><b>Instagram</b><span>@minhanh.draws</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://tiktok.com/@minhanh.draws" target="_blank" rel="noopener"><div class="soc tt">TT</div><div class="txt"><b>TikTok</b><span>@minhanh.draws</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://discord.gg/ma-invite" target="_blank" rel="noopener"><div class="soc dc">DC</div><div class="txt"><b>Discord</b><span>minhanh#0000</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://facebook.com/minhanh" target="_blank" rel="noopener"><div class="soc fb">f</div><div class="txt"><b>Facebook</b><span>/minhanh</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://youtube.com/@minhanh" target="_blank" rel="noopener"><div class="soc yt">YT</div><div class="txt"><b>YouTube</b><span>@minhanh</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://github.com/minhanh" target="_blank" rel="noopener"><div class="soc gh">GH</div><div class="txt"><b>GitHub</b><span>@minhanh</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://t.me/minhanh" target="_blank" rel="noopener"><div class="soc tg">TG</div><div class="txt"><b>Telegram</b><span>@minhanh</span></div><svg class="i go"><use href="#go"/></svg></a>
+    <a class="item" href="https://linkedin.com/in/minhanh" target="_blank" rel="noopener"><div class="soc li">in</div><div class="txt"><b>LinkedIn</b><span>/in/minhanh</span></div><svg class="i go"><use href="#go"/></svg></a>
+  </nav>
+</section>
+
+<a class="fab" href="mailto:minhanh@example.com"><svg class="i"><use href="#mail"/></svg>Gửi email</a>
+
+<script>
+(function(){
+  var root=document.documentElement,sw=document.getElementById('theme');
+  function current(){
+    return root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  }
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    sw.setAttribute('aria-checked',t==='dark');
+  }
+  var saved=null;
+  try{saved=localStorage.getItem('bio-theme')}catch(e){}
+  apply(saved==='dark'||saved==='light'?saved:current());
+  sw.addEventListener('click',function(){
+    var n=current()==='dark'?'light':'dark';
+    apply(n);
+    try{localStorage.setItem('bio-theme',n)}catch(e){}
+  });
+  document.querySelectorAll('.btn,.item,.fab').forEach(function(el){
+    el.addEventListener('pointerdown',function(e){
+      var r=el.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,d=document.createElement('span');
+      d.className='ripple';d.style.width=d.style.height=s+'px';
+      d.style.left=(e.clientX-r.left-s/2)+'px';d.style.top=(e.clientY-r.top-s/2)+'px';
+      el.appendChild(d);setTimeout(function(){d.remove()},500);
+    });
+  });
+})();
+</script>
+</body>
+</html>
