@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FocusStudy — Harry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #000;
+      --paper: #FFFDF5;
+      --yellow: #FFE500;
+      --red: #FF4D4D;
+      --blue: #4D7CFF;
+      --green: #34D399;
+      --border: 4px solid var(--ink);
+      --hard: 8px 8px 0 var(--ink);
+    }
+    * , *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 500 17px/1.55 "Space Grotesk", system-ui, sans-serif;
+      background-image:
+        linear-gradient(rgba(0,0,0,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    h1, h2, h3 {
+      font-family: "Archivo Black", sans-serif;
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.05;
+    }
+
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 80px;
+      display: grid;
+      gap: 26px;
+    }
+    .box {
+      background: #fff;
+      border: var(--border);
+      box-shadow: var(--hard);
+      padding: 24px;
+    }
+    .tag {
+      display: inline-block;
+      background: var(--yellow);
+      border: var(--border);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 6px 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: .04em;
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--blue);
+      color: #fff;
+      text-shadow: 3px 3px 0 var(--ink);
+    }
+    .hero h1 {
+      font-size: clamp(48px, 12vw, 88px);
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+    }
+    .hero .tag { margin-bottom: 18px; }
+    .hero p {
+      margin: 16px 0 22px;
+      font-size: 20px;
+      font-weight: 700;
+      max-width: 34ch;
+      text-shadow: none;
+      color: #fff;
+      background: var(--ink);
+      display: inline;
+      padding: 2px 6px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    /* Buttons */
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border: var(--border);
+      box-shadow: var(--hard);
+      background: var(--red);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: uppercase;
+      transition: transform .08s, box-shadow .08s;
+    }
+    .btn:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0 var(--ink); }
+    .btn:active { transform: translate(6px, 6px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn.y { background: var(--yellow); }
+    .btn.g { background: var(--green); }
+    .btn.w { background: #fff; }
+
+    /* Screenshots placeholder */
+    .shots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .shot {
+      aspect-ratio: 9 / 16;
+      border: var(--border);
+      box-shadow: var(--hard);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Archivo Black", sans-serif;
+      text-transform: uppercase;
+      font-size: 18px;
+      text-align: center;
+      padding: 12px;
+    }
+    .shot.a { background: var(--yellow); }
+    .shot.b { background: var(--red); color: #fff; }
+    .shot.c { background: var(--green); }
+
+    /* Section heading */
+    .sec-h {
+      font-size: 30px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sec-h::after {
+      content: "";
+      flex: 1;
+      height: 6px;
+      background: var(--ink);
+    }
+
+    /* Features */
+    .feat {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .card {
+      border: var(--border);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 18px;
+      background: var(--paper);
+    }
+    .card .n {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border);
+      background: var(--ink);
+      color: var(--yellow);
+      font-family: "Archivo Black", sans-serif;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      font-size: 20px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .card p { margin: 0; }
+
+    /* Steps */
+    .steps {
+      counter-reset: s;
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li {
+      counter-increment: s;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      border: var(--border);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 14px;
+      background: #fff;
+    }
+    .steps li::before {
+      content: counter(s);
+      font-family: "Archivo Black", sans-serif;
+      background: var(--yellow);
+      border: var(--border);
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+    }
+
+    /* CTA */
+    .cta {
+      background: var(--yellow);
+      text-align: center;
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+    }
+    .cta h2 {
+      font-size: clamp(28px, 6vw, 40px);
+      text-transform: uppercase;
+    }
+    .cta p { margin: 0; font-size: 18px; max-width: 46ch; }
+
+    footer {
+      text-align: center;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: .06em;
+    }
+
+    @media (max-width: 640px) {
+      .shots { grid-template-columns: 1fr 1fr; }
+      .shot:last-child { display: none; }
+      .feat { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <section class="box hero">
+      <span class="tag">Dự án cá nhân · Harry</span>
+      <h1>Focus<br>Study</h1>
+      <p>Ứng dụng giúp bạn học tập tập trung hơn. Mô tả chi tiết sẽ được cập nhật tại đây.</p>
+      <div class="btns">
+        <a class="btn y" href="https://github.com/harryrealchannel-26/FocusStudy" target="_blank" rel="noopener">Xem mã nguồn</a>
+        <a class="btn w" href="#tinh-nang">Tính năng</a>
+      </div>
+    </section>
+
+    <section class="shots" aria-label="Ảnh chụp màn hình">
+      <div class="shot a">Ảnh màn hình 1</div>
+      <div class="shot b">Ảnh màn hình 2</div>
+      <div class="shot c">Ảnh màn hình 3</div>
+    </section>
+
+    <section class="box" id="tinh-nang">
+      <h2 class="sec-h">Tính năng</h2>
+      <div class="feat">
+        <div class="card"><span class="n">1</span><h3>Tính năng A</h3><p>Mô tả ngắn cho tính năng thứ nhất.</p></div>
+        <div class="card"><span class="n">2</span><h3>Tính năng B</h3><p>Mô tả ngắn cho tính năng thứ hai.</p></div>
+        <div class="card"><span class="n">3</span><h3>Tính năng C</h3><p>Mô tả ngắn cho tính năng thứ ba.</p></div>
+        <div class="card"><span class="n">4</span><h3>Tính năng D</h3><p>Mô tả ngắn cho tính năng thứ tư.</p></div>
+      </div>
+    </section>
+
+    <section class="box">
+      <h2 class="sec-h">Cách dùng</h2>
+      <ol class="steps">
+        <li><span>Tải mã nguồn từ GitHub về máy.</span></li>
+        <li><span>Làm theo hướng dẫn cài đặt trong README.</span></li>
+        <li><span>Bắt đầu học và theo dõi tiến độ của bạn.</span></li>
+      </ol>
+    </section>
+
+    <section class="box cta">
+      <h2>Góp ý cho FocusStudy</h2>
+      <p>Có ý tưởng hay hoặc phát hiện lỗi? Mở issue trên GitHub hoặc nhắn trực tiếp cho mình.</p>
+      <div class="btns">
+        <a class="btn" href="https://github.com/harryrealchannel-26/FocusStudy/issues" target="_blank" rel="noopener">Mở issue</a>
+        <a class="btn g" href="https://zalo.me/0788319329" target="_blank" rel="noopener">Nhắn Zalo</a>
+      </div>
+    </section>
+
+    <footer>© Harry 2026 · FocusStudy</footer>
+
+  </main>
+</body>
+</html>
