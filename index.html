@@ -203,6 +203,74 @@
     .skill.g { background: var(--green); }
     .skill.b { background: var(--blue); }
 
+    /* Mini music player */
+    .mp {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #5E1414;
+      color: #fff;
+      border-radius: 18px;
+      padding: 12px 14px 16px;
+      box-shadow: 0 10px 24px rgba(94, 20, 20, .35);
+    }
+    .mp-cover {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      flex: none;
+      background: linear-gradient(135deg, #FF4D4D, #7A1F1F);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      color: #fff;
+    }
+    .mp-info { flex: 1; min-width: 0; }
+    .mp-title {
+      font: 600 16px/1.3 "Space Grotesk", system-ui, sans-serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mp-artist {
+      font: 500 13px/1.3 "Space Grotesk", system-ui, sans-serif;
+      color: rgba(255, 255, 255, .7);
+      margin-top: 2px;
+    }
+    .mp-btn, .mp-play {
+      border: 0;
+      background: none;
+      color: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      flex: none;
+      padding: 0;
+    }
+    .mp-btn { width: 36px; height: 36px; opacity: .85; }
+    .mp-btn svg, .mp-play svg { width: 22px; height: 22px; fill: currentColor; }
+    .mp-play { width: 44px; height: 44px; }
+    .mp-play svg { width: 30px; height: 30px; }
+    .mp-btn:hover, .mp-play:hover { opacity: .75; }
+    .mp-bar {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 7px;
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, .25);
+      cursor: pointer;
+    }
+    .mp-bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: 4px;
+      background: #fff;
+    }
+
     /* Contact */
     .contact {
       background: var(--ink);
@@ -286,90 +354,25 @@
         <span class="skill b">Lập trình</span>
       </div>
     </section>
-<section class="box" id="music">
-  <div class="sec-h"><span class="num">04</span><h2>Nhạc</h2></div>
 
-  <audio id="audio" preload="metadata"></audio>
+    <section class="mp-wrap" id="music" aria-label="Trình phát nhạc">
+      <audio id="mpAudio" preload="metadata"></audio>
+      <div class="mp">
+        <div class="mp-cover" aria-hidden="true">♪</div>
+        <div class="mp-info">
+          <div class="mp-title" id="mpTitle">Bài 1</div>
+          <div class="mp-artist">Harry</div>
+        </div>
+        <button class="mp-btn" id="mpNext" type="button" aria-label="Bài sau">
+          <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+        <button class="mp-play" id="mpPlay" type="button" aria-label="Phát">
+          <svg viewBox="0 0 24 24"><path id="mpIcon" d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="mp-bar" id="mpBar"><span id="mpFill"></span></div>
+      </div>
+    </section>
 
-  <div class="np">
-    <div class="np-title" id="npTitle">Bé ơi từ từ</div>
-    <input type="range" id="seek" min="0" max="100" value="0" step="0.1" aria-label="Tua bài hát">
-    <div class="np-time"><span id="cur">0:00</span><span id="dur">0:00</span></div>
-    <div class="np-ctrl">
-      <button class="ctl" id="prevBtn" type="button" aria-label="Bài trước">◀◀</button>
-      <button class="ctl big" id="playBtn" type="button" aria-label="Phát">▶</button>
-      <button class="ctl" id="nextBtn" type="button" aria-label="Bài sau">▶▶</button>
-    </div>
-  </div>
-
-  <div class="track-list">
-    <button class="track on" type="button" data-src="be-oi-tu-tu.mp3" data-title="Bé ơi từ từ">01 · Bé ơi từ từ</button>
-    <button class="track" type="button" data-src="to-te-ti.mp3" data-title="Tò Te Tí">02 · Tò Te Tí</button>
-    <button class="track" type="button" data-src="tung-quen.mp3" data-title="Từng Quen">03 · Từng Quen</button>
-            <button class="track" type="button" data-src="bai-4.mp3" data-title="DIA DELÍCIA">04 · DIA DELÍCIA</button>
-  </div>
-  
-</section>
-
-<style>
-  .np { background: var(--yellow); border: 4px solid #000; box-shadow: 8px 8px 0 #000; padding: 18px; margin-bottom: 18px; }
-  .np-title { font-family: "Archivo Black", sans-serif; font-size: 22px; text-transform: uppercase; margin-bottom: 12px; }
-  .np input[type=range] { width: 100%; accent-color: #000; margin: 0; }
-  .np-time { display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; margin: 4px 0 12px; }
-  .np-ctrl { display: flex; justify-content: center; align-items: center; gap: 14px; }
-  .ctl { width: 52px; height: 52px; border: 4px solid #000; box-shadow: 4px 4px 0 #000; background: #fff; color: #000; font-weight: 700; font-size: 16px; cursor: pointer; transition: transform .08s, box-shadow .08s; }
-  .ctl:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000; }
-  .ctl:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000; }
-  .ctl.big { width: 70px; height: 70px; background: var(--red); font-size: 22px; }
-  .track-list { display: grid; gap: 12px; }
-  .track { display: flex; align-items: center; width: 100%; padding: 14px 16px; border: 4px solid #000; box-shadow: 4px 4px 0 #000; background: #fff; color: #000; font: 700 16px "Space Grotesk", system-ui, sans-serif; text-align: left; cursor: pointer; transition: transform .08s, box-shadow .08s; }
-  .track:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000; }
-  .track.on { background: var(--green); }
-</style>
-
-<script>
-(function(){
-  var a=document.getElementById('audio'),
-      tracks=[].slice.call(document.querySelectorAll('.track')),
-      seek=document.getElementById('seek'),
-      cur=document.getElementById('cur'),
-      dur=document.getElementById('dur'),
-      title=document.getElementById('npTitle'),
-      playBtn=document.getElementById('playBtn'),
-      i=0;
-  function fmt(s){
-    if(!isFinite(s)) return '0:00';
-    var m=Math.floor(s/60), c=Math.floor(s%60);
-    return m+':'+(c<10?'0':'')+c;
-  }
-  function load(n, play){
-    i=(n+tracks.length)%tracks.length;
-    a.src=tracks[i].dataset.src;
-    title.textContent=tracks[i].dataset.title;
-    tracks.forEach(function(t,k){ t.classList.toggle('on', k===i); });
-    seek.value=0; cur.textContent='0:00'; dur.textContent='0:00';
-    if(play) a.play().catch(function(){});
-  }
-  playBtn.addEventListener('click', function(){
-    if(a.paused){ a.play().catch(function(){}); } else { a.pause(); }
-  });
-  document.getElementById('prevBtn').addEventListener('click', function(){ load(i-1, true); });
-  document.getElementById('nextBtn').addEventListener('click', function(){ load(i+1, true); });
-  tracks.forEach(function(t,k){ t.addEventListener('click', function(){ load(k, true); }); });
-  a.addEventListener('play', function(){ playBtn.textContent='❚❚'; });
-  a.addEventListener('pause', function(){ playBtn.textContent='▶'; });
-  a.addEventListener('ended', function(){ load(i+1, true); });
-  a.addEventListener('loadedmetadata', function(){ dur.textContent=fmt(a.duration); });
-  a.addEventListener('timeupdate', function(){
-    if(a.duration){ seek.value=a.currentTime/a.duration*100; cur.textContent=fmt(a.currentTime); }
-  });
-  seek.addEventListener('input', function(){
-    if(a.duration) a.currentTime=seek.value/100*a.duration;
-  });
-  load(0, false);
-})();
-</script>
-    
     <section class="contact">
       <h2>Làm việc cùng mình</h2>
       <p>Nếu bạn có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được, nhắn mình ngay.</p>
@@ -382,5 +385,54 @@
     <footer>© Harry 2026 · Designer &amp; Developer</footer>
 
   </main>
+
+  <script>
+    (function () {
+      var tracks = [
+        { src: 'be-oi-tu-tu.mp3', title: 'BÉ ƠI TỪ TỪ' },
+        { src: 'to-te-ti.mp3', title: 'TÒ TE TÍ' },
+        { src: 'tung-quen.mp3', title: 'TỪNG QUEN' },
+        { src: 'bai-4.mp3', title: 'DIA DELÍCIA' }
+      ];
+      var PLAY = 'M8 5v14l11-7z';
+      var PAUSE = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+
+      var a = document.getElementById('mpAudio'),
+          title = document.getElementById('mpTitle'),
+          playBtn = document.getElementById('mpPlay'),
+          icon = document.getElementById('mpIcon'),
+          nextBtn = document.getElementById('mpNext'),
+          bar = document.getElementById('mpBar'),
+          fill = document.getElementById('mpFill'),
+          i = 0;
+
+      function load(n, play) {
+        i = (n + tracks.length) % tracks.length;
+        a.src = tracks[i].src;
+        title.textContent = tracks[i].title;
+        fill.style.width = '0';
+        if (play) a.play().catch(function () {});
+      }
+
+      playBtn.addEventListener('click', function () {
+        if (a.paused) { a.play().catch(function () {}); } else { a.pause(); }
+      });
+      nextBtn.addEventListener('click', function () { load(i + 1, true); });
+      bar.addEventListener('click', function (e) {
+        if (!a.duration) return;
+        var r = bar.getBoundingClientRect();
+        a.currentTime = (e.clientX - r.left) / r.width * a.duration;
+      });
+
+      a.addEventListener('play', function () { icon.setAttribute('d', PAUSE); });
+      a.addEventListener('pause', function () { icon.setAttribute('d', PLAY); });
+      a.addEventListener('ended', function () { load(i + 1, true); });
+      a.addEventListener('timeupdate', function () {
+        if (a.duration) fill.style.width = (a.currentTime / a.duration * 100) + '%';
+      });
+
+      load(0, false);
+    })();
+  </script>
 </body>
 </html>
