@@ -5,298 +5,308 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Harry — Bio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #000;
-      --paper: #FFFDF5;
-      --yellow: #FFE500;
-      --red: #FF4D4D;
-      --blue: #4D7CFF;
-      --green: #34D399;
-      --pink: #FF8AD8;
-      --border: 4px solid var(--ink);
-      --hard: 8px 8px 0 var(--ink);
+      --bg: #F2F2F2;
+      --card: #FFFFFF;
+      --ink: #111111;
+      --muted: #6B6B6B;
+      --line: #E3E3E3;
+      --accent: #D71921;
+      --chip: #F5F5F5;
+      --radius: 24px;
     }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #000000;
+        --card: #111111;
+        --ink: #F2F2F2;
+        --muted: #8A8A8A;
+        --line: #232323;
+        --chip: #1A1A1A;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #000000;
+      --card: #111111;
+      --ink: #F2F2F2;
+      --muted: #8A8A8A;
+      --line: #232323;
+      --chip: #1A1A1A;
+    }
+
     * , *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: var(--paper);
+      background: var(--bg);
       color: var(--ink);
-      font: 500 17px/1.5 "Space Grotesk", system-ui, sans-serif;
-      background-image:
-        linear-gradient(rgba(0,0,0,.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,.06) 1px, transparent 1px);
-      background-size: 32px 32px;
+      font: 400 16px/1.5 "Space Grotesk", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: background .3s, color .3s;
     }
-    h1, h2, h3 {
-      font-family: "Archivo Black", sans-serif;
-      font-weight: 400;
-      margin: 0;
+    .dot {
+      font-family: "Doto", "Space Mono", monospace;
+      font-weight: 700;
+      letter-spacing: .02em;
       line-height: 1;
     }
 
     .wrap {
-      max-width: 820px;
+      max-width: 620px;
       margin: 0 auto;
-      padding: 28px 18px 80px;
+      padding: 20px 18px 80px;
       display: grid;
-      gap: 22px;
+      gap: 14px;
     }
-    .box {
-      background: #fff;
-      border: var(--border);
-      box-shadow: var(--hard);
-      padding: 22px;
+
+    /* Top bar */
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 4px 2px;
     }
-    .tag {
-      display: inline-block;
-      background: var(--yellow);
-      border: var(--border);
-      box-shadow: 4px 4px 0 var(--ink);
-      padding: 6px 12px;
-      font-weight: 700;
+    .top .dot { font-size: 18px; letter-spacing: .08em; text-transform: uppercase; }
+    .toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .toggle svg { width: 20px; height: 20px; fill: currentColor; }
+    .ic-moon { display: none; }
+    :root[data-theme="dark"] .ic-sun { display: none; }
+    :root[data-theme="dark"] .ic-moon { display: block; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .ic-sun { display: none; }
+      :root:not([data-theme="light"]) .ic-moon { display: block; }
+    }
+    :root[data-theme="light"] .ic-moon { display: none; }
+    :root[data-theme="light"] .ic-sun { display: block; }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .label {
+      font-size: 12px;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      font-size: 14px;
-      letter-spacing: .04em;
+      color: var(--muted);
+      margin: 0 0 14px;
     }
 
     /* Hero */
-    .hero {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 24px;
-      align-items: center;
-      background: var(--yellow);
-    }
+    .hero { display: grid; gap: 22px; justify-items: center; text-align: center; padding: 36px 24px 30px; }
     .avatar {
-      width: 170px;
-      height: 170px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
       object-fit: cover;
-      border: var(--border);
-      box-shadow: var(--hard);
-      background: #fff;
+      border: 1px solid var(--line);
+      background: var(--chip);
     }
-    .hero h1 {
-      font-size: clamp(40px, 10vw, 64px);
-      text-transform: uppercase;
-      letter-spacing: -.01em;
+    .hero h1 { font-size: clamp(40px, 11vw, 60px); margin: 0; text-transform: uppercase; }
+    .hero .role { margin: 0; color: var(--muted); font-size: 15px; max-width: 42ch; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 14px;
     }
-    .hero p {
-      margin: 14px 0 0;
-      font-size: 19px;
-      font-weight: 700;
-    }
-    .hero .mark {
-      background: var(--ink);
-      color: var(--yellow);
-      padding: 0 6px;
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
     }
 
     /* Buttons */
-    .btns {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 20px;
-    }
+    .btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 20px;
-      border: var(--border);
-      box-shadow: var(--hard);
-      background: var(--red);
-      color: var(--ink);
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
       text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      text-transform: uppercase;
-      transition: transform .08s, box-shadow .08s;
+      font-weight: 500;
+      font-size: 15px;
+      transition: opacity .15s;
     }
-    .btn:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0 var(--ink); }
-    .btn:active { transform: translate(6px, 6px); box-shadow: 2px 2px 0 var(--ink); }
-    .btn.b { background: var(--blue); }
-    .btn.g { background: var(--green); }
-    .btn.w { background: #fff; }
+    .btn:hover { opacity: .85; }
+    .btn.ghost { background: transparent; color: var(--ink); }
+    .btn.red { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-    /* Social grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .soc {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 18px;
-      border: var(--border);
-      box-shadow: var(--hard);
-      background: #fff;
-      text-decoration: none;
-      color: var(--ink);
-      font-weight: 700;
-      transition: transform .08s, box-shadow .08s;
-    }
-    .soc:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0 var(--ink); }
-    .soc b {
-      font-family: "Archivo Black", sans-serif;
-      font-weight: 400;
-      font-size: 20px;
-    }
-    .soc small { font-size: 14px; font-weight: 500; word-break: break-all; }
-    .soc.s1 { background: var(--pink); }
-    .soc.s2 { background: var(--yellow); }
-    .soc.s3 { background: var(--green); }
-    .soc.s4 { background: var(--blue); }
-    .soc.s5 { background: #fff; }
-    .soc.s6 { background: var(--red); }
-
-    /* Section headings */
-    .sec-h {
+    /* Link rows */
+    .rows { display: grid; }
+    .row {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 14px;
+      padding: 14px 4px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
     }
-    .sec-h h2 { font-size: 26px; text-transform: uppercase; }
-    .sec-h .num {
-      background: var(--ink);
-      color: #fff;
-      padding: 4px 10px;
-      font-family: "Archivo Black", sans-serif;
+    .row:first-child { border-top: 0; }
+    .row:hover .go { color: var(--accent); }
+    .row .ico {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--chip);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      flex: none;
     }
+    .row .txt { flex: 1; min-width: 0; }
+    .row .name { font-weight: 500; }
+    .row .sub {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .row .go { color: var(--muted); font-size: 18px; }
 
     /* Project */
-    .proj { display: grid; gap: 16px; }
     .proj-img {
-      height: 170px;
-      border: var(--border);
-      background: repeating-linear-gradient(45deg, var(--blue) 0 14px, #3A62D8 14px 28px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-family: "Archivo Black", sans-serif;
-      font-size: 34px;
-      text-transform: uppercase;
-      text-shadow: 3px 3px 0 var(--ink);
+      height: 150px;
+      border-radius: 18px;
+      background: var(--chip);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
     }
-    .proj h3 { font-size: 28px; text-transform: uppercase; }
-    .proj p { margin: 8px 0 0; }
+    .proj-img .dot { font-size: 42px; color: var(--ink); opacity: .9; }
+    .proj-img::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      right: 18px;
+      top: 18px;
+    }
+    .proj h3 { margin: 16px 0 6px; font-size: 20px; font-weight: 500; }
+    .proj p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
 
     /* Skills */
-    .skills { display: flex; flex-wrap: wrap; gap: 12px; }
-    .skill {
-      border: var(--border);
-      box-shadow: 4px 4px 0 var(--ink);
-      padding: 8px 14px;
-      font-weight: 700;
-      background: #fff;
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 14px;
+      color: var(--ink);
+      background: var(--card);
     }
-    .skill.y { background: var(--yellow); }
-    .skill.r { background: var(--red); }
-    .skill.g { background: var(--green); }
-    .skill.b { background: var(--blue); }
+    .chip.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-    /* Mini music player */
+    /* Mini player */
     .mp {
       position: relative;
       display: flex;
       align-items: center;
       gap: 12px;
-      background: #5E1414;
-      color: #fff;
-      border-radius: 18px;
-      padding: 12px 14px 16px;
-      box-shadow: 0 10px 24px rgba(94, 20, 20, .35);
+      background: var(--ink);
+      color: var(--bg);
+      border-radius: 20px;
+      padding: 14px 14px 18px;
     }
     .mp-cover {
       width: 52px;
       height: 52px;
-      border-radius: 10px;
+      border-radius: 14px;
       flex: none;
-      background: linear-gradient(135deg, #FF4D4D, #7A1F1F);
+      background: var(--accent);
       display: grid;
       place-items: center;
-      font-size: 24px;
       color: #fff;
     }
+    .mp-cover .dot { font-size: 26px; }
     .mp-info { flex: 1; min-width: 0; }
     .mp-title {
-      font: 600 16px/1.3 "Space Grotesk", system-ui, sans-serif;
+      font-weight: 500;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .mp-artist {
-      font: 500 13px/1.3 "Space Grotesk", system-ui, sans-serif;
-      color: rgba(255, 255, 255, .7);
-      margin-top: 2px;
-    }
+    .mp-artist { font-size: 13px; opacity: .6; margin-top: 2px; }
     .mp-btn, .mp-play {
       border: 0;
       background: none;
-      color: #fff;
+      color: inherit;
       cursor: pointer;
       display: grid;
       place-items: center;
       flex: none;
       padding: 0;
     }
-    .mp-btn { width: 36px; height: 36px; opacity: .85; }
+    .mp-btn { width: 36px; height: 36px; opacity: .75; }
     .mp-btn svg, .mp-play svg { width: 22px; height: 22px; fill: currentColor; }
-    .mp-play { width: 44px; height: 44px; }
-    .mp-play svg { width: 30px; height: 30px; }
+    .mp-play {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    .mp-play svg { width: 26px; height: 26px; }
     .mp-btn:hover, .mp-play:hover { opacity: .75; }
     .mp-bar {
       position: absolute;
       left: 14px;
       right: 14px;
-      bottom: 7px;
-      height: 4px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, .25);
+      bottom: 8px;
+      height: 3px;
+      border-radius: 3px;
+      background: rgba(128, 128, 128, .35);
       cursor: pointer;
     }
     .mp-bar span {
       display: block;
       height: 100%;
       width: 0;
-      border-radius: 4px;
-      background: #fff;
+      border-radius: 3px;
+      background: var(--accent);
     }
-
-    /* Contact */
-    .contact {
-      background: var(--ink);
-      color: #fff;
-      border: var(--border);
-      box-shadow: var(--hard);
-      padding: 26px;
-      display: grid;
-      gap: 14px;
-    }
-    .contact h2 { font-size: 34px; color: var(--yellow); text-transform: uppercase; }
-    .contact p { margin: 0; font-size: 18px; }
-    .contact .btns { margin-top: 6px; }
 
     footer {
       text-align: center;
-      font-weight: 700;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      font-size: 14px;
-      letter-spacing: .06em;
+      padding-top: 10px;
     }
 
-    @media (max-width: 640px) {
-      .hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
-      .grid { grid-template-columns: 1fr 1fr; }
-      .soc:last-child { grid-column: span 2; }
+    @media (min-width: 560px) {
+      .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     }
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; }
@@ -306,59 +316,86 @@
 <body>
   <main class="wrap">
 
-    <section class="box hero">
-      <img class="avatar" src="avatar.webp" alt="Ảnh đại diện của Harry" width="170" height="170">
-      <div>
-        <span class="tag">Hi, i am</span>
-        <h1>Harry <span class="mark">Dev</span></h1>
-        <p>Designer &amp; Developer. Mình thiết kế giao diện rồi tự viết code để sản phẩm chạy thật.</p>
-        <div class="btns">
-          <a class="btn" href="mailto:giaphuchuynh418@gmail.com">Liên hệ</a>
-          <a class="btn w" href="#links">Xem liên kết</a>
-        </div>
+    <header class="top">
+      <span class="dot">Harry</span>
+      <button class="toggle" id="theme" type="button" aria-label="Đổi giao diện sáng/tối">
+        <svg class="ic-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.2 2.8l1.4 1.4-1.4 1.4-1.4-1.4zm14.2 14.2 1.4 1.4-1.4 1.4-1.4-1.4zM2.8 19.8l1.4-1.4 1.4 1.4-1.4 1.4zM16.2 4.2l1.4-1.4 1.4 1.4-1.4 1.4z"/></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </header>
+
+    <section class="card hero">
+      <img class="avatar" src="avatar.webp" alt="Ảnh đại diện của Harry" width="150" height="150">
+      <span class="status">Đang mở cho dự án mới</span>
+      <h1 class="dot">Harry</h1>
+      <p class="role">Designer &amp; Developer. Mình thiết kế giao diện rồi tự viết code để sản phẩm chạy thật.</p>
+      <div class="btns">
+        <a class="btn red" href="mailto:giaphuchuynh418@gmail.com">Liên hệ</a>
+        <a class="btn ghost" href="#links">Xem liên kết</a>
       </div>
     </section>
 
-    <section class="box">
-      <div class="sec-h"><span class="num">01</span><h2>Kết nối</h2></div>
-      <nav class="grid" id="links" aria-label="Liên kết">
-        <a class="soc s1" href="https://discord.gg/RA4uTrkU" target="_blank" rel="noopener"><b>Discord</b><small>Tham gia server</small></a>
-        <a class="soc s2" href="https://www.instagram.com/harry_real_channel" target="_blank" rel="noopener"><b>Instagram</b><small>@harry_real_channel</small></a>
-        <a class="soc s3" href="https://www.tiktok.com/@harry_real_channel" target="_blank" rel="noopener"><b>TikTok</b><small>@harry_real_channel</small></a>
-        <a class="soc s4" href="https://github.com/harryrealchannel-26" target="_blank" rel="noopener"><b>GitHub</b><small>@harryrealchannel-26</small></a>
-        <a class="soc s5" href="https://zalo.me/0788319329" target="_blank" rel="noopener"><b>Zalo</b><small>0788 319 329</small></a>
-        <a class="soc s6" href="mailto:giaphuchuynh418@gmail.com"><b>Email</b><small>giaphuchuynh418@gmail.com</small></a>
+    <section class="card" id="links">
+      <p class="label">Kết nối</p>
+      <nav class="rows" aria-label="Liên kết">
+        <a class="row" href="https://discord.gg/RA4uTrkU" target="_blank" rel="noopener">
+          <span class="ico dot">DC</span>
+          <span class="txt"><span class="name">Discord</span><br><span class="sub">Tham gia server</span></span>
+          <span class="go">→</span>
+        </a>
+        <a class="row" href="https://www.instagram.com/harry_real_channel" target="_blank" rel="noopener">
+          <span class="ico dot">IG</span>
+          <span class="txt"><span class="name">Instagram</span><br><span class="sub">@harry_real_channel</span></span>
+          <span class="go">→</span>
+        </a>
+        <a class="row" href="https://www.tiktok.com/@harry_real_channel" target="_blank" rel="noopener">
+          <span class="ico dot">TT</span>
+          <span class="txt"><span class="name">TikTok</span><br><span class="sub">@harry_real_channel</span></span>
+          <span class="go">→</span>
+        </a>
+        <a class="row" href="https://github.com/harryrealchannel-26" target="_blank" rel="noopener">
+          <span class="ico dot">GH</span>
+          <span class="txt"><span class="name">GitHub</span><br><span class="sub">@harryrealchannel-26</span></span>
+          <span class="go">→</span>
+        </a>
+        <a class="row" href="https://zalo.me/0788319329" target="_blank" rel="noopener">
+          <span class="ico dot">ZL</span>
+          <span class="txt"><span class="name">Zalo</span><br><span class="sub">0788 319 329</span></span>
+          <span class="go">→</span>
+        </a>
+        <a class="row" href="mailto:giaphuchuynh418@gmail.com">
+          <span class="ico dot">@</span>
+          <span class="txt"><span class="name">Email</span><br><span class="sub">giaphuchuynh418@gmail.com</span></span>
+          <span class="go">→</span>
+        </a>
       </nav>
     </section>
 
-    <section class="box">
-      <div class="sec-h"><span class="num">02</span><h2>Dự án</h2></div>
-      <div class="proj">
-        <div class="proj-img" aria-hidden="true">FocusStudy</div>
-        <div>
-          <h3>FocusStudy</h3>
-          <p>Dự án học tập của mình trên GitHub. Mở mã nguồn để xem cách mình tổ chức code.</p>
-          <div class="btns">
-            <a class="btn b" href="https://github.com/harryrealchannel-26/FocusStudy" target="_blank" rel="noopener">Xem mã nguồn</a>
-          </div>
-        </div>
+    <section class="card proj">
+      <p class="label">Dự án</p>
+      <div class="proj-img" aria-hidden="true"><span class="dot">FS</span></div>
+      <h3>FocusStudy</h3>
+      <p>Dự án học tập của mình trên GitHub. Mở mã nguồn để xem cách mình tổ chức code.</p>
+      <div class="btns" style="justify-content:flex-start">
+        <a class="btn" href="https://github.com/harryrealchannel-26/FocusStudy" target="_blank" rel="noopener">Xem mã nguồn</a>
       </div>
     </section>
 
-    <section class="box">
-      <div class="sec-h"><span class="num">03</span><h2>Kỹ năng</h2></div>
-      <div class="skills">
-        <span class="skill y">Thiết kế giao diện</span>
-        <span class="skill r">HTML</span>
-        <span class="skill g">Kotlin</span>
-        <span class="skill b">Lập trình</span>
+    <section class="card">
+      <p class="label">Kỹ năng</p>
+      <div class="chips">
+        <span class="chip on">Thiết kế giao diện</span>
+        <span class="chip on">HTML</span>
+        <span class="chip on">Kotlin</span>
+        <span class="chip">Lập trình</span>
       </div>
     </section>
 
-    <section class="mp-wrap" id="music" aria-label="Trình phát nhạc">
+    <section class="card" id="music" aria-label="Trình phát nhạc">
+      <p class="label">Nghe nhạc</p>
       <audio id="mpAudio" preload="metadata"></audio>
       <div class="mp">
-        <div class="mp-cover" aria-hidden="true">♪</div>
+        <div class="mp-cover" aria-hidden="true"><span class="dot">♪</span></div>
         <div class="mp-info">
           <div class="mp-title" id="mpTitle">Bài 1</div>
           <div class="mp-artist">Harry</div>
@@ -373,25 +410,42 @@
       </div>
     </section>
 
-    <section class="contact">
-      <h2>Làm việc cùng mình</h2>
-      <p>Nếu bạn có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được, nhắn mình ngay.</p>
-      <div class="btns">
-        <a class="btn g" href="https://zalo.me/0788319329" target="_blank" rel="noopener">Nhắn Zalo</a>
-        <a class="btn w" href="mailto:giaphuchuynh418@gmail.com">Gửi email</a>
+    <section class="card">
+      <p class="label">Làm việc cùng mình</p>
+      <p class="role" style="margin:0 0 16px;color:var(--muted)">Có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được? Nhắn mình ngay.</p>
+      <div class="btns" style="justify-content:flex-start">
+        <a class="btn red" href="https://zalo.me/0788319329" target="_blank" rel="noopener">Nhắn Zalo</a>
+        <a class="btn ghost" href="mailto:giaphuchuynh418@gmail.com">Gửi email</a>
       </div>
     </section>
 
-    <footer>© Harry 2026 · Designer &amp; Developer</footer>
+    <footer>© Harry 2026</footer>
 
   </main>
 
   <script>
     (function () {
+      var root = document.documentElement, btn = document.getElementById('theme');
+      function current() {
+        return root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      }
+      var saved = null;
+      try { saved = localStorage.getItem('bio-theme'); } catch (e) {}
+      if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+      btn.addEventListener('click', function () {
+        var n = current() === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', n);
+        try { localStorage.setItem('bio-theme', n); } catch (e) {}
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
       var tracks = [
-        { src: 'be-oi-tu-tu.mp3', title: 'BÉ ƠI TỪ TỪ' },
-        { src: 'to-te-ti.mp3', title: 'TÒ TE TÍ' },
         { src: 'tung-quen.mp3', title: 'TỪNG QUEN' },
+        { src: 'to-te-ti.mp3', title: 'TÒ TE TÍ' },
+        { src: 'be-oi-tu-tu.mp3', title: 'BÉ ƠI TỪ TỪ' },
         { src: 'bai-4.mp3', title: 'DIA DELÍCIA' }
       ];
       var PLAY = 'M8 5v14l11-7z';
