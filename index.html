@@ -190,6 +190,38 @@
     .btn.ghost { background: transparent; color: var(--ink); }
     .btn.red { background: var(--accent); border-color: var(--accent); color: #fff; }
 
+    /* Guide */
+    .guide { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: g; }
+    .guide li {
+      counter-increment: g;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .guide li:first-child { border-top: 0; padding-top: 0; }
+    .guide li::before {
+      content: counter(g);
+      font-family: "Doto", "Space Mono", monospace;
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--accent);
+      min-width: 26px;
+    }
+    .guide h3 { margin: 0 0 4px; font-size: 16px; font-weight: 500; }
+    .guide p { margin: 0; color: var(--muted); font-size: 14px; }
+    .guide kbd {
+      font: 500 12px "Space Grotesk", system-ui, sans-serif;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 1px 6px;
+      background: var(--chip);
+      color: var(--ink);
+    }
+
     /* Link rows */
     .rows { display: grid; }
     .row {
@@ -305,6 +337,42 @@
       </div>
     </section>
 
+    <section class="card">
+      <p class="label" data-i18n="guideLabel">Cách sử dụng</p>
+      <ol class="guide">
+        <li>
+          <div>
+            <h3 data-i18n="g1t">Xem thông tin</h3>
+            <p data-i18n="g1d">Phần đầu trang là giới thiệu ngắn. Bấm "Xem liên kết" để cuộn xuống danh sách mạng xã hội.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g2t">Kết nối với mình</h3>
+            <p data-i18n="g2d">Bấm vào từng dòng để mở Discord, Instagram, TikTok, GitHub, Zalo hoặc email. Các link mở ở tab mới.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g3t">Đổi ngôn ngữ</h3>
+            <p data-i18n="g3d">Bấm nút <kbd>EN</kbd> ở góc trên để xem bằng tiếng Anh, bấm <kbd>VI</kbd> để quay lại tiếng Việt. Trang nhớ lựa chọn của bạn.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g4t">Đổi giao diện</h3>
+            <p data-i18n="g4d">Bấm ô tròn màu ở góc trên, chọn một theme trong danh sách. Trang nhớ theme bạn đã chọn cho lần sau.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g5t">Xem dự án và liên hệ</h3>
+            <p data-i18n="g5d">Bấm "Xem mã nguồn" để mở FocusStudy trên GitHub. Muốn trao đổi công việc, bấm "Nhắn Zalo" hoặc "Gửi email".</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
     <section class="card" id="links">
       <p class="label" data-i18n="linksLabel">Kết nối</p>
       <nav class="rows" aria-label="Links">
@@ -382,6 +450,17 @@
           role: 'Designer & Developer. Mình thiết kế giao diện rồi tự viết code để sản phẩm chạy thật.',
           contactBtn: 'Liên hệ',
           linksBtn: 'Xem liên kết',
+          guideLabel: 'Cách sử dụng',
+          g1t: 'Xem thông tin',
+          g1d: 'Phần đầu trang là giới thiệu ngắn. Bấm "Xem liên kết" để cuộn xuống danh sách mạng xã hội.',
+          g2t: 'Kết nối với mình',
+          g2d: 'Bấm vào từng dòng để mở Discord, Instagram, TikTok, GitHub, Zalo hoặc email. Các link mở ở tab mới.',
+          g3t: 'Đổi ngôn ngữ',
+          g3d: 'Bấm nút EN ở góc trên để xem bằng tiếng Anh, bấm VI để quay lại tiếng Việt. Trang nhớ lựa chọn của bạn.',
+          g4t: 'Đổi giao diện',
+          g4d: 'Bấm ô tròn màu ở góc trên, chọn một theme trong danh sách. Trang nhớ theme bạn đã chọn cho lần sau.',
+          g5t: 'Xem dự án và liên hệ',
+          g5d: 'Bấm "Xem mã nguồn" để mở FocusStudy trên GitHub. Muốn trao đổi công việc, bấm "Nhắn Zalo" hoặc "Gửi email".',
           linksLabel: 'Kết nối',
           discordSub: 'Tham gia server',
           projLabel: 'Dự án',
@@ -406,6 +485,17 @@
           role: 'Designer & Developer. I design interfaces and write the code myself, so products actually run.',
           contactBtn: 'Contact',
           linksBtn: 'See links',
+          guideLabel: 'How to use this page',
+          g1t: 'See the info',
+          g1d: 'The top of the page is a short introduction. Tap "See links" to scroll down to the social links.',
+          g2t: 'Connect with me',
+          g2d: 'Tap any row to open Discord, Instagram, TikTok, GitHub, Zalo or email. Links open in a new tab.',
+          g3t: 'Change language',
+          g3d: 'Tap EN at the top to read in English, tap VI to switch back to Vietnamese. The page remembers your choice.',
+          g4t: 'Change theme',
+          g4d: 'Tap the colored circle at the top and pick a theme from the list. The page remembers your choice for next time.',
+          g5t: 'Project and contact',
+          g5d: 'Tap "View source code" to open FocusStudy on GitHub. To work together, tap "Message on Zalo" or "Send email".',
           linksLabel: 'Connect',
           discordSub: 'Join the server',
           projLabel: 'Project',
