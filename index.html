@@ -16,28 +16,12 @@
       --accent: #D71921;
       --chip: #F5F5F5;
       --radius: 24px;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #000000;
-        --card: #111111;
-        --ink: #F2F2F2;
-        --muted: #8A8A8A;
-        --line: #232323;
-        --chip: #1A1A1A;
-      }
-    }
-    :root[data-theme="dark"] {
-      --bg: #000000;
-      --card: #111111;
-      --ink: #F2F2F2;
-      --muted: #8A8A8A;
-      --line: #232323;
-      --chip: #1A1A1A;
+      color-scheme: light;
     }
 
     * , *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    [hidden] { display: none !important; }
     body {
       margin: 0;
       background: var(--bg);
@@ -69,7 +53,7 @@
       padding: 6px 4px 2px;
     }
     .top .dot { font-size: 18px; letter-spacing: .08em; text-transform: uppercase; }
-    .top-right { display: flex; gap: 8px; align-items: center; }
+    .top-right { position: relative; display: flex; gap: 8px; align-items: center; }
     .lang {
       height: 44px;
       padding: 0 16px;
@@ -81,27 +65,64 @@
       font: 500 14px "Space Grotesk", system-ui, sans-serif;
       letter-spacing: .08em;
     }
-    .toggle {
+    .swatch-btn {
       width: 44px;
       height: 44px;
       border-radius: 50%;
       border: 1px solid var(--line);
       background: var(--card);
-      color: var(--ink);
       cursor: pointer;
       display: grid;
       place-items: center;
     }
-    .toggle svg { width: 20px; height: 20px; fill: currentColor; }
-    .ic-moon { display: none; }
-    :root[data-theme="dark"] .ic-sun { display: none; }
-    :root[data-theme="dark"] .ic-moon { display: block; }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) .ic-sun { display: none; }
-      :root:not([data-theme="light"]) .ic-moon { display: block; }
+    .swatch-btn span {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--line);
     }
-    :root[data-theme="light"] .ic-moon { display: none; }
-    :root[data-theme="light"] .ic-sun { display: block; }
+
+    /* Theme picker */
+    .tpanel {
+      position: absolute;
+      right: 0;
+      top: 52px;
+      width: 260px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      z-index: 20;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .18);
+    }
+    .tpanel .label { margin-bottom: 10px; }
+    .tlist { display: grid; gap: 4px; max-height: 60vh; overflow-y: auto; }
+    .tbtn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 10px;
+      border: 0;
+      border-radius: 12px;
+      background: none;
+      color: var(--ink);
+      font: 500 14px "Space Grotesk", system-ui, sans-serif;
+      cursor: pointer;
+      text-align: left;
+    }
+    .tbtn:hover { background: var(--chip); }
+    .tbtn.on { background: var(--chip); box-shadow: inset 0 0 0 1px var(--accent); }
+    .tbtn .name { flex: 1; }
+    .dots { display: flex; gap: 4px; }
+    .dots i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(128, 128, 128, .35);
+    }
 
     /* Cards */
     .card {
@@ -240,75 +261,6 @@
     }
     .chip.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-    /* Mini player */
-    .mp {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--ink);
-      color: var(--bg);
-      border-radius: 20px;
-      padding: 14px 14px 18px;
-    }
-    .mp-cover {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      flex: none;
-      background: var(--accent);
-      display: grid;
-      place-items: center;
-      color: #fff;
-    }
-    .mp-cover .dot { font-size: 26px; }
-    .mp-info { flex: 1; min-width: 0; }
-    .mp-title {
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .mp-artist { font-size: 13px; opacity: .6; margin-top: 2px; }
-    .mp-btn, .mp-play {
-      border: 0;
-      background: none;
-      color: inherit;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      flex: none;
-      padding: 0;
-    }
-    .mp-btn { width: 36px; height: 36px; opacity: .75; }
-    .mp-btn svg, .mp-play svg { width: 22px; height: 22px; fill: currentColor; }
-    .mp-play {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: var(--bg);
-      color: var(--ink);
-    }
-    .mp-play svg { width: 26px; height: 26px; }
-    .mp-btn:hover, .mp-play:hover { opacity: .75; }
-    .mp-bar {
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 8px;
-      height: 3px;
-      border-radius: 3px;
-      background: rgba(128, 128, 128, .35);
-      cursor: pointer;
-    }
-    .mp-bar span {
-      display: block;
-      height: 100%;
-      width: 0;
-      border-radius: 3px;
-      background: var(--accent);
-    }
-
     .muted { margin: 0 0 16px; color: var(--muted); }
 
     footer {
@@ -332,10 +284,13 @@
       <span class="dot">Harry</span>
       <div class="top-right">
         <button class="lang" id="langBtn" type="button" aria-label="Change language">EN</button>
-        <button class="toggle" id="theme" type="button" aria-label="Theme">
-          <svg class="ic-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.2 2.8l1.4 1.4-1.4 1.4-1.4-1.4zm14.2 14.2 1.4 1.4-1.4 1.4-1.4-1.4zM2.8 19.8l1.4-1.4 1.4 1.4-1.4 1.4zM16.2 4.2l1.4-1.4 1.4 1.4-1.4 1.4z"/></svg>
-          <svg class="ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <button class="swatch-btn" id="themeBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Theme">
+          <span></span>
         </button>
+        <div class="tpanel" id="tpanel" hidden>
+          <p class="label" data-i18n="themeTitle">Giao diện</p>
+          <div class="tlist" id="tlist"></div>
+        </div>
       </div>
     </header>
 
@@ -406,29 +361,6 @@
       </div>
     </section>
 
-    <section class="card" id="music" aria-label="Music player">
-      <p class="label" data-i18n="musicLabel">Nghe nhạc</p>
-      <audio id="mpAudio" preload="metadata"></audio>
-      <div class="mp">
-        <div class="mp-cover" aria-hidden="true"><span class="dot">♪</span></div>
-        <div class="mp-info">
-          <div class="mp-title" id="mpTitle">TỪNG QUEN</div>
-          <div class="mp-artist">Wren Evans, itsnk</div>
-          <div class="mp-title" id="mpTitle">TÒ TE TÍ</div>
-          <div class="mp-artist">Wren Evans, itsnk</div>
-          <div class="mp-title" id="mpTitle">BÉ ƠI TỪ TỪ</div>
-          <div class="mp-artist">Wren Evans, itsnk</div>
-        </div>
-        <button class="mp-btn" id="mpNext" type="button" aria-label="Next">
-          <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-        </button>
-        <button class="mp-play" id="mpPlay" type="button" aria-label="Play">
-          <svg viewBox="0 0 24 24"><path id="mpIcon" d="M8 5v14l11-7z"/></svg>
-        </button>
-        <div class="mp-bar" id="mpBar"><span id="mpFill"></span></div>
-      </div>
-    </section>
-
     <section class="card">
       <p class="label" data-i18n="workLabel">Làm việc cùng mình</p>
       <p class="muted" data-i18n="workDesc">Có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được? Nhắn mình ngay.</p>
@@ -458,20 +390,16 @@
           skillsLabel: 'Kỹ năng',
           skill1: 'Thiết kế giao diện',
           skill4: 'Lập trình',
-          musicLabel: 'Nghe nhạc',
           workLabel: 'Làm việc cùng mình',
           workDesc: 'Có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được? Nhắn mình ngay.',
           zaloBtn: 'Nhắn Zalo',
           emailBtn: 'Gửi email',
-          themeLabel: 'Đổi giao diện sáng/tối',
+          themeTitle: 'Giao diện',
+          themeLabel: 'Chọn giao diện',
           langLabel: 'Đổi sang tiếng Anh',
-          play: 'Phát', next: 'Bài sau',
-          ariaMusic: 'Trình phát nhạc',
           ariaLinks: 'Liên kết',
           ariaAvatar: 'Harry',
-          nextLabel: 'EN',
-          tracks: ['TỪNG QUEN', 'TÒ TE TÍ', 'BÉ ƠI TỪ TỪ'],
-          trackAlt: 'Bài'
+          nextLabel: 'EN'
         },
         en: {
           status: 'Open for new projects',
@@ -486,33 +414,122 @@
           skillsLabel: 'Skills',
           skill1: 'UI design',
           skill4: 'Programming',
-          musicLabel: 'Listen',
           workLabel: 'Work with me',
           workDesc: 'Have a product idea or need a beautiful interface with working code? Message me.',
           zaloBtn: 'Message on Zalo',
           emailBtn: 'Send email',
-          themeLabel: 'Toggle light/dark theme',
+          themeTitle: 'Theme',
+          themeLabel: 'Choose theme',
           langLabel: 'Switch to Vietnamese',
-          play: 'Play', next: 'Next',
-          ariaMusic: 'Music player',
           ariaLinks: 'Links',
           ariaAvatar: 'Harry',
-          nextLabel: 'VI',
-          tracks: ['TỪNG QUEN', 'TÒ TE TÍ', 'BÉ ƠI TỪ TỪ',]
-          trackAlt: 'Track'
+          nextLabel: 'VI'
         }
       };
+
+      var THEMES = [
+        { id: 'paper',      name: 'Paper',            dark: false, bg: '#F2F2F2', card: '#FFFFFF', ink: '#111111', muted: '#6B6B6B', line: '#E3E3E3', accent: '#D71921', chip: '#F5F5F5' },
+        { id: 'flexoki',    name: 'Flexoki Light',    dark: false, bg: '#FFFCF0', card: '#F2F0E5', ink: '#100F0F', muted: '#6F6E69', line: '#DAD8CE', accent: '#D14D41', chip: '#E6E4D9' },
+        { id: 'latte',      name: 'Catppuccin Latte', dark: false, bg: '#EFF1F5', card: '#FFFFFF', ink: '#4C4F69', muted: '#6C6F85', line: '#CCD0DA', accent: '#D20F39', chip: '#E6E9EF' },
+        { id: 'tokyo',      name: 'Tokyo Night',      dark: true,  bg: '#1A1B26', card: '#24283B', ink: '#C0CAF5', muted: '#7A82A8', line: '#3B4261', accent: '#F7768E', chip: '#292E42' },
+        { id: 'mocha',      name: 'Catppuccin Mocha', dark: true,  bg: '#1E1E2E', card: '#313244', ink: '#CDD6F4', muted: '#A6ADC8', line: '#45475A', accent: '#F38BA8', chip: '#181825' },
+        { id: 'gruvbox',    name: 'Gruvbox',          dark: true,  bg: '#282828', card: '#3C3836', ink: '#EBDBB2', muted: '#A89984', line: '#504945', accent: '#FB4934', chip: '#32302F' },
+        { id: 'nord',       name: 'Nord',             dark: true,  bg: '#2E3440', card: '#3B4252', ink: '#ECEFF4', muted: '#9AA5B8', line: '#4C566A', accent: '#88C0D0', chip: '#434C5E' },
+        { id: 'rosepine',   name: 'Rose Pine',        dark: true,  bg: '#191724', card: '#1F1D2E', ink: '#E0DEF4', muted: '#908CAA', line: '#26233A', accent: '#EB6F92', chip: '#26233A' },
+        { id: 'everforest', name: 'Everforest',       dark: true,  bg: '#2D353B', card: '#343F44', ink: '#D3C6AA', muted: '#859289', line: '#475258', accent: '#A7C080', chip: '#3D484D' },
+        { id: 'kanagawa',   name: 'Kanagawa',         dark: true,  bg: '#1F1F28', card: '#2A2A37', ink: '#DCD7BA', muted: '#727169', line: '#363646', accent: '#E46876', chip: '#252535' }
+      ];
+
+      var root = document.documentElement;
+      var langBtn = document.getElementById('langBtn');
+      var themeBtn = document.getElementById('themeBtn');
+      var tpanel = document.getElementById('tpanel');
+      var tlist = document.getElementById('tlist');
+      var avatar = document.querySelector('.avatar');
+      var navLinks = document.getElementById('links');
 
       var lang = 'vi';
       try { lang = localStorage.getItem('bio-lang') || 'vi'; } catch (e) {}
       if (lang !== 'vi' && lang !== 'en') lang = 'vi';
 
-      var root = document.documentElement;
-      var langBtn = document.getElementById('langBtn');
-      var themeBtn = document.getElementById('theme');
-      var avatar = document.querySelector('.avatar');
-      var navLinks = document.getElementById('links');
-      var music = document.getElementById('music');
+      var themeId = null;
+      try { themeId = localStorage.getItem('bio-theme-id'); } catch (e) {}
+      if (!themeId) {
+        themeId = matchMedia('(prefers-color-scheme: dark)').matches ? 'tokyo' : 'paper';
+      }
+
+      function findTheme(id) {
+        for (var k = 0; k < THEMES.length; k++) if (THEMES[k].id === id) return THEMES[k];
+        return THEMES[0];
+      }
+
+      function setTheme(id) {
+        var t = findTheme(id);
+        themeId = t.id;
+        root.style.setProperty('--bg', t.bg);
+        root.style.setProperty('--card', t.card);
+        root.style.setProperty('--ink', t.ink);
+        root.style.setProperty('--muted', t.muted);
+        root.style.setProperty('--line', t.line);
+        root.style.setProperty('--accent', t.accent);
+        root.style.setProperty('--chip', t.chip);
+        root.style.colorScheme = t.dark ? 'dark' : 'light';
+        themeBtn.querySelector('span').style.background = t.accent;
+        try { localStorage.setItem('bio-theme-id', t.id); } catch (e) {}
+        markActive();
+      }
+
+      function buildThemeList() {
+        tlist.innerHTML = '';
+        THEMES.forEach(function (t) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'tbtn';
+          b.setAttribute('data-id', t.id);
+          b.innerHTML =
+            '<span class="name"></span>' +
+            '<span class="dots">' +
+              '<i style="background:' + t.bg + '"></i>' +
+              '<i style="background:' + t.card + '"></i>' +
+              '<i style="background:' + t.ink + '"></i>' +
+              '<i style="background:' + t.accent + '"></i>' +
+            '</span>';
+          b.querySelector('.name').textContent = t.name;
+          b.addEventListener('click', function () {
+            setTheme(t.id);
+            closePanel();
+          });
+          tlist.appendChild(b);
+        });
+      }
+
+      function markActive() {
+        tlist.querySelectorAll('.tbtn').forEach(function (b) {
+          var on = b.getAttribute('data-id') === themeId;
+          b.classList.toggle('on', on);
+          if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+        });
+      }
+
+      function openPanel() {
+        tpanel.hidden = false;
+        themeBtn.setAttribute('aria-expanded', 'true');
+      }
+      function closePanel() {
+        tpanel.hidden = true;
+        themeBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      themeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (tpanel.hidden) openPanel(); else closePanel();
+      });
+      document.addEventListener('click', function (e) {
+        if (!tpanel.hidden && !tpanel.contains(e.target) && e.target !== themeBtn) closePanel();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closePanel();
+      });
 
       function apply() {
         var d = T[lang];
@@ -526,10 +543,6 @@
         themeBtn.setAttribute('aria-label', d.themeLabel);
         avatar.setAttribute('alt', d.ariaAvatar);
         navLinks.setAttribute('aria-label', d.ariaLinks);
-        music.setAttribute('aria-label', d.ariaMusic);
-        document.getElementById('mpNext').setAttribute('aria-label', d.next);
-        document.getElementById('mpPlay').setAttribute('aria-label', d.play);
-        renderTitle();
       }
 
       langBtn.addEventListener('click', function () {
@@ -538,68 +551,9 @@
         apply();
       });
 
-      var current = 'light';
-      function theme() {
-        return root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      }
-      var saved = null;
-      try { saved = localStorage.getItem('bio-theme'); } catch (e) {}
-      if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
-      themeBtn.addEventListener('click', function () {
-        var n = theme() === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', n);
-        try { localStorage.setItem('bio-theme', n); } catch (e) {}
-      });
-
-      var tracks = [
-        { src: 'tung-quen.mp3' },
-        { src: 'to-te-ti.mp3' },
-        { src: 'be-oi-tu-tu.mp3' },
-      ];
-      var PLAY = 'M8 5v14l11-7z';
-      var PAUSE = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
-
-      var a = document.getElementById('mpAudio'),
-          title = document.getElementById('mpTitle'),
-          playBtn = document.getElementById('mpPlay'),
-          icon = document.getElementById('mpIcon'),
-          nextBtn = document.getElementById('mpNext'),
-          bar = document.getElementById('mpBar'),
-          fill = document.getElementById('mpFill'),
-          i = 0;
-
-      function renderTitle() {
-        var names = T[lang].tracks;
-        title.textContent = names[i];
-      }
-
-      function load(n, play) {
-        i = (n + tracks.length) % tracks.length;
-        a.src = tracks[i].src;
-        renderTitle();
-        fill.style.width = '0';
-        if (play) a.play().catch(function () {});
-      }
-
-      playBtn.addEventListener('click', function () {
-        if (a.paused) { a.play().catch(function () {}); } else { a.pause(); }
-      });
-      nextBtn.addEventListener('click', function () { load(i + 1, true); });
-      bar.addEventListener('click', function (e) {
-        if (!a.duration) return;
-        var r = bar.getBoundingClientRect();
-        a.currentTime = (e.clientX - r.left) / r.width * a.duration;
-      });
-
-      a.addEventListener('play', function () { icon.setAttribute('d', PAUSE); });
-      a.addEventListener('pause', function () { icon.setAttribute('d', PLAY); });
-      a.addEventListener('ended', function () { load(i + 1, true); });
-      a.addEventListener('timeupdate', function () {
-        if (a.duration) fill.style.width = (a.currentTime / a.duration * 100) + '%';
-      });
-
+      buildThemeList();
+      setTheme(themeId);
       apply();
-      load(0, false);
     })();
   </script>
 </body>
