@@ -575,9 +575,10 @@
         <h2 id="taskTitle" data-i18n="taskTitle">Nhiệm vụ nhỏ</h2>
         <button class="close" id="closeTask" type="button" aria-label="Đóng">✕</button>
       </div>
-      <p class="task-text" data-i18n="taskText">Theo dõi TikTok @harry_real_channel để ủng hộ mình, rồi bấm lại "Xem mã nguồn" nhé.</p>
+      <p class="task-text" data-i18n="taskText">Theo dõi TikTok @harry_real_channel, rồi bấm "Tiếp tục" để mở dự án.</p>
       <div class="task-actions">
         <button class="btn red" id="taskFollow" type="button" data-i18n="taskFollow">Theo dõi TikTok</button>
+        <button class="btn" id="taskContinue" type="button" hidden data-i18n="taskContinue">Tiếp tục</button>
       </div>
     </div>
   </div>
@@ -656,8 +657,9 @@
           zaloBtn: 'Nhắn Zalo',
           emailBtn: 'Gửi email',
           taskTitle: 'Nhiệm vụ nhỏ',
-          taskText: 'Theo dõi TikTok @harry_real_channel để ủng hộ mình, rồi bấm lại "Xem mã nguồn" nhé.',
+          taskText: 'Theo dõi TikTok @harry_real_channel, rồi bấm "Tiếp tục" để mở dự án.',
           taskFollow: 'Theo dõi TikTok',
+          taskContinue: 'Tiếp tục',
           themeTitle: 'Giao diện',
           themeLabel: 'Chọn giao diện',
           langLabel: 'Đổi sang tiếng Anh',
@@ -696,8 +698,9 @@
           zaloBtn: 'Message on Zalo',
           emailBtn: 'Send email',
           taskTitle: 'Quick task',
-          taskText: 'Follow @harry_real_channel on TikTok to support me, then tap "View source code" again.',
+          taskText: 'Follow @harry_real_channel on TikTok, then tap "Continue" to open the project.',
           taskFollow: 'Follow on TikTok',
+          taskContinue: 'Continue',
           themeTitle: 'Theme',
           themeLabel: 'Choose theme',
           langLabel: 'Switch to Vietnamese',
@@ -736,8 +739,11 @@
       var taskModal = document.getElementById('taskModal');
       var closeTask = document.getElementById('closeTask');
       var taskFollow = document.getElementById('taskFollow');
+      var taskContinue = document.getElementById('taskContinue');
       var avatar = document.querySelector('.avatar');
       var navLinks = document.getElementById('links');
+
+      var pendingUrl = null;
 
       var lang = 'vi';
       try { lang = localStorage.getItem('bio-lang') || 'vi'; } catch (e) {}
@@ -842,18 +848,21 @@
       }
 
       function openTask() {
+        taskContinue.hidden = true;
         taskModal.hidden = false;
         taskFollow.focus();
       }
 
       function closeTaskModal() {
         taskModal.hidden = true;
+        pendingUrl = null;
       }
 
       document.querySelectorAll('.js-project').forEach(function (el) {
         el.addEventListener('click', function (e) {
           if (hasFollowed()) return;
           e.preventDefault();
+          pendingUrl = el.getAttribute('href');
           openTask();
         });
       });
@@ -861,7 +870,14 @@
       taskFollow.addEventListener('click', function () {
         try { localStorage.setItem(TASK_KEY, '1'); } catch (e) {}
         window.open(TIKTOK_URL, '_blank', 'noopener');
+        taskContinue.hidden = false;
+        taskContinue.focus();
+      });
+
+      taskContinue.addEventListener('click', function () {
+        var url = pendingUrl;
         closeTaskModal();
+        if (url) window.open(url, '_blank', 'noopener');
       });
 
       closeTask.addEventListener('click', closeTaskModal);
