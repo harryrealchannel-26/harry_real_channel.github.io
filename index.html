@@ -69,6 +69,18 @@
       padding: 6px 4px 2px;
     }
     .top .dot { font-size: 18px; letter-spacing: .08em; text-transform: uppercase; }
+    .top-right { display: flex; gap: 8px; align-items: center; }
+    .lang {
+      height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      cursor: pointer;
+      font: 500 14px "Space Grotesk", system-ui, sans-serif;
+      letter-spacing: .08em;
+    }
     .toggle {
       width: 44px;
       height: 44px;
@@ -138,6 +150,7 @@
 
     /* Buttons */
     .btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .btns.left { justify-content: flex-start; }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -296,6 +309,8 @@
       background: var(--accent);
     }
 
+    .muted { margin: 0 0 16px; color: var(--muted); }
+
     footer {
       text-align: center;
       color: var(--muted);
@@ -305,9 +320,6 @@
       padding-top: 10px;
     }
 
-    @media (min-width: 560px) {
-      .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    }
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; }
     }
@@ -318,29 +330,32 @@
 
     <header class="top">
       <span class="dot">Harry</span>
-      <button class="toggle" id="theme" type="button" aria-label="Đổi giao diện sáng/tối">
-        <svg class="ic-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.2 2.8l1.4 1.4-1.4 1.4-1.4-1.4zm14.2 14.2 1.4 1.4-1.4 1.4-1.4-1.4zM2.8 19.8l1.4-1.4 1.4 1.4-1.4 1.4zM16.2 4.2l1.4-1.4 1.4 1.4-1.4 1.4z"/></svg>
-        <svg class="ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      </button>
+      <div class="top-right">
+        <button class="lang" id="langBtn" type="button" aria-label="Change language">EN</button>
+        <button class="toggle" id="theme" type="button" aria-label="Theme">
+          <svg class="ic-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.2 2.8l1.4 1.4-1.4 1.4-1.4-1.4zm14.2 14.2 1.4 1.4-1.4 1.4-1.4-1.4zM2.8 19.8l1.4-1.4 1.4 1.4-1.4 1.4zM16.2 4.2l1.4-1.4 1.4 1.4-1.4 1.4z"/></svg>
+          <svg class="ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
     </header>
 
     <section class="card hero">
-      <img class="avatar" src="avatar.webp" alt="Ảnh đại diện của Harry" width="150" height="150">
-      <span class="status">Đang mở cho dự án mới</span>
+      <img class="avatar" src="avatar.webp" alt="Harry" width="150" height="150">
+      <span class="status" data-i18n="status">Đang mở cho dự án mới</span>
       <h1 class="dot">Harry</h1>
-      <p class="role">Designer &amp; Developer. Mình thiết kế giao diện rồi tự viết code để sản phẩm chạy thật.</p>
+      <p class="role" data-i18n="role">Designer &amp; Developer. Mình thiết kế giao diện rồi tự viết code để sản phẩm chạy thật.</p>
       <div class="btns">
-        <a class="btn red" href="mailto:giaphuchuynh418@gmail.com">Liên hệ</a>
-        <a class="btn ghost" href="#links">Xem liên kết</a>
+        <a class="btn red" href="mailto:giaphuchuynh418@gmail.com" data-i18n="contactBtn">Liên hệ</a>
+        <a class="btn ghost" href="#links" data-i18n="linksBtn">Xem liên kết</a>
       </div>
     </section>
 
     <section class="card" id="links">
-      <p class="label">Kết nối</p>
-      <nav class="rows" aria-label="Liên kết">
+      <p class="label" data-i18n="linksLabel">Kết nối</p>
+      <nav class="rows" aria-label="Links">
         <a class="row" href="https://discord.gg/RA4uTrkU" target="_blank" rel="noopener">
           <span class="ico dot">DC</span>
-          <span class="txt"><span class="name">Discord</span><br><span class="sub">Tham gia server</span></span>
+          <span class="txt"><span class="name">Discord</span><br><span class="sub" data-i18n="discordSub">Tham gia server</span></span>
           <span class="go">→</span>
         </a>
         <a class="row" href="https://www.instagram.com/harry_real_channel" target="_blank" rel="noopener">
@@ -372,27 +387,27 @@
     </section>
 
     <section class="card proj">
-      <p class="label">Dự án</p>
+      <p class="label" data-i18n="projLabel">Dự án</p>
       <div class="proj-img" aria-hidden="true"><span class="dot">FS</span></div>
       <h3>FocusStudy</h3>
-      <p>Dự án học tập của mình trên GitHub. Mở mã nguồn để xem cách mình tổ chức code.</p>
-      <div class="btns" style="justify-content:flex-start">
-        <a class="btn" href="https://github.com/harryrealchannel-26/FocusStudy" target="_blank" rel="noopener">Xem mã nguồn</a>
+      <p data-i18n="projDesc">Dự án học tập của mình trên GitHub. Mở mã nguồn để xem cách mình tổ chức code.</p>
+      <div class="btns left">
+        <a class="btn" href="https://github.com/harryrealchannel-26/FocusStudy" target="_blank" rel="noopener" data-i18n="projBtn">Xem mã nguồn</a>
       </div>
     </section>
 
     <section class="card">
-      <p class="label">Kỹ năng</p>
+      <p class="label" data-i18n="skillsLabel">Kỹ năng</p>
       <div class="chips">
-        <span class="chip on">Thiết kế giao diện</span>
+        <span class="chip on" data-i18n="skill1">Thiết kế giao diện</span>
         <span class="chip on">HTML</span>
         <span class="chip on">Kotlin</span>
-        <span class="chip">Lập trình</span>
+        <span class="chip" data-i18n="skill4">Lập trình</span>
       </div>
     </section>
 
-    <section class="card" id="music" aria-label="Trình phát nhạc">
-      <p class="label">Nghe nhạc</p>
+    <section class="card" id="music" aria-label="Music player">
+      <p class="label" data-i18n="musicLabel">Nghe nhạc</p>
       <audio id="mpAudio" preload="metadata"></audio>
       <div class="mp">
         <div class="mp-cover" aria-hidden="true"><span class="dot">♪</span></div>
@@ -400,10 +415,10 @@
           <div class="mp-title" id="mpTitle">Bài 1</div>
           <div class="mp-artist">Harry</div>
         </div>
-        <button class="mp-btn" id="mpNext" type="button" aria-label="Bài sau">
+        <button class="mp-btn" id="mpNext" type="button" aria-label="Next">
           <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
         </button>
-        <button class="mp-play" id="mpPlay" type="button" aria-label="Phát">
+        <button class="mp-play" id="mpPlay" type="button" aria-label="Play">
           <svg viewBox="0 0 24 24"><path id="mpIcon" d="M8 5v14l11-7z"/></svg>
         </button>
         <div class="mp-bar" id="mpBar"><span id="mpFill"></span></div>
@@ -411,11 +426,11 @@
     </section>
 
     <section class="card">
-      <p class="label">Làm việc cùng mình</p>
-      <p class="role" style="margin:0 0 16px;color:var(--muted)">Có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được? Nhắn mình ngay.</p>
-      <div class="btns" style="justify-content:flex-start">
-        <a class="btn red" href="https://zalo.me/0788319329" target="_blank" rel="noopener">Nhắn Zalo</a>
-        <a class="btn ghost" href="mailto:giaphuchuynh418@gmail.com">Gửi email</a>
+      <p class="label" data-i18n="workLabel">Làm việc cùng mình</p>
+      <p class="muted" data-i18n="workDesc">Có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được? Nhắn mình ngay.</p>
+      <div class="btns left">
+        <a class="btn red" href="https://zalo.me/0788319329" target="_blank" rel="noopener" data-i18n="zaloBtn">Nhắn Zalo</a>
+        <a class="btn ghost" href="mailto:giaphuchuynh418@gmail.com" data-i18n="emailBtn">Gửi email</a>
       </div>
     </section>
 
@@ -425,29 +440,117 @@
 
   <script>
     (function () {
-      var root = document.documentElement, btn = document.getElementById('theme');
-      function current() {
+      var T = {
+        vi: {
+          status: 'Đang mở cho dự án mới',
+          role: 'Designer & Developer. Mình thiết kế giao diện rồi tự viết code để sản phẩm chạy thật.',
+          contactBtn: 'Liên hệ',
+          linksBtn: 'Xem liên kết',
+          linksLabel: 'Kết nối',
+          discordSub: 'Tham gia server',
+          projLabel: 'Dự án',
+          projDesc: 'Dự án học tập của mình trên GitHub. Mở mã nguồn để xem cách mình tổ chức code.',
+          projBtn: 'Xem mã nguồn',
+          skillsLabel: 'Kỹ năng',
+          skill1: 'Thiết kế giao diện',
+          skill4: 'Lập trình',
+          musicLabel: 'Nghe nhạc',
+          workLabel: 'Làm việc cùng mình',
+          workDesc: 'Có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được? Nhắn mình ngay.',
+          zaloBtn: 'Nhắn Zalo',
+          emailBtn: 'Gửi email',
+          themeLabel: 'Đổi giao diện sáng/tối',
+          langLabel: 'Đổi sang tiếng Anh',
+          play: 'Phát', next: 'Bài sau',
+          ariaMusic: 'Trình phát nhạc',
+          ariaLinks: 'Liên kết',
+          ariaAvatar: 'Harry',
+          nextLabel: 'EN',
+          tracks: ['Bài 1', 'Bài 2', 'Bài 3', 'DIA DELÍCIA'],
+          trackAlt: 'Bài'
+        },
+        en: {
+          status: 'Open for new projects',
+          role: 'Designer & Developer. I design interfaces and write the code myself, so products actually run.',
+          contactBtn: 'Contact',
+          linksBtn: 'See links',
+          linksLabel: 'Connect',
+          discordSub: 'Join the server',
+          projLabel: 'Project',
+          projDesc: 'A study project of mine on GitHub. Open the source code to see how I organize it.',
+          projBtn: 'View source code',
+          skillsLabel: 'Skills',
+          skill1: 'UI design',
+          skill4: 'Programming',
+          musicLabel: 'Listen',
+          workLabel: 'Work with me',
+          workDesc: 'Have a product idea or need a beautiful interface with working code? Message me.',
+          zaloBtn: 'Message on Zalo',
+          emailBtn: 'Send email',
+          themeLabel: 'Toggle light/dark theme',
+          langLabel: 'Switch to Vietnamese',
+          play: 'Play', next: 'Next',
+          ariaMusic: 'Music player',
+          ariaLinks: 'Links',
+          ariaAvatar: 'Harry',
+          nextLabel: 'VI',
+          tracks: ['Track 1', 'Track 2', 'Track 3', 'DIA DELÍCIA'],
+          trackAlt: 'Track'
+        }
+      };
+
+      var lang = 'vi';
+      try { lang = localStorage.getItem('bio-lang') || 'vi'; } catch (e) {}
+      if (lang !== 'vi' && lang !== 'en') lang = 'vi';
+
+      var root = document.documentElement;
+      var langBtn = document.getElementById('langBtn');
+      var themeBtn = document.getElementById('theme');
+      var avatar = document.querySelector('.avatar');
+      var navLinks = document.getElementById('links');
+      var music = document.getElementById('music');
+
+      function apply() {
+        var d = T[lang];
+        root.setAttribute('lang', lang);
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (d[key] !== undefined) el.textContent = d[key];
+        });
+        langBtn.textContent = d.nextLabel;
+        langBtn.setAttribute('aria-label', d.langLabel);
+        themeBtn.setAttribute('aria-label', d.themeLabel);
+        avatar.setAttribute('alt', d.ariaAvatar);
+        navLinks.setAttribute('aria-label', d.ariaLinks);
+        music.setAttribute('aria-label', d.ariaMusic);
+        document.getElementById('mpNext').setAttribute('aria-label', d.next);
+        document.getElementById('mpPlay').setAttribute('aria-label', d.play);
+        renderTitle();
+      }
+
+      langBtn.addEventListener('click', function () {
+        lang = lang === 'vi' ? 'en' : 'vi';
+        try { localStorage.setItem('bio-lang', lang); } catch (e) {}
+        apply();
+      });
+
+      var current = 'light';
+      function theme() {
         return root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       }
       var saved = null;
       try { saved = localStorage.getItem('bio-theme'); } catch (e) {}
       if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
-      btn.addEventListener('click', function () {
-        var n = current() === 'dark' ? 'light' : 'dark';
+      themeBtn.addEventListener('click', function () {
+        var n = theme() === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', n);
         try { localStorage.setItem('bio-theme', n); } catch (e) {}
       });
-    })();
-  </script>
 
-  <script>
-    (function () {
       var tracks = [
-        { src: 'tung-quen.mp3', title: 'TỪNG QUEN' },
-        { src: 'to-te-ti.mp3', title: 'TÒ TE TÍ' },
-        { src: 'be-oi-tu-tu.mp3', title: 'BÉ ƠI TỪ TỪ' },
-        { src: 'bai-4.mp3', title: 'DIA DELÍCIA' },
-        { src: 'Collect 200 - Collect 200.mp3', title: 'COLLECT 200' }
+        { src: 'tung-quen.mp3' },
+        { src: 'to-te-ti.mp3' },
+        { src: 'be-oi-tu-tu.mp3' },
       ];
       var PLAY = 'M8 5v14l11-7z';
       var PAUSE = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
@@ -461,10 +564,15 @@
           fill = document.getElementById('mpFill'),
           i = 0;
 
+      function renderTitle() {
+        var names = T[lang].tracks;
+        title.textContent = names[i];
+      }
+
       function load(n, play) {
         i = (n + tracks.length) % tracks.length;
         a.src = tracks[i].src;
-        title.textContent = tracks[i].title;
+        renderTitle();
         fill.style.width = '0';
         if (play) a.play().catch(function () {});
       }
@@ -486,6 +594,7 @@
         if (a.duration) fill.style.width = (a.currentTime / a.duration * 100) + '%';
       });
 
+      apply();
       load(0, false);
     })();
   </script>
