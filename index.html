@@ -52,28 +52,42 @@
       align-items: center;
       padding: 6px 4px 2px;
     }
-    .top .dot { font-size: 18px; letter-spacing: .08em; text-transform: uppercase; }
-    .top-right { position: relative; display: flex; gap: 8px; align-items: center; }
-    .lang {
+    .top .dot {
+      font-size: 18px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .top-right {
+      position: relative;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .icon-btn,
+    .lang,
+    .swatch-btn {
       height: 44px;
-      padding: 0 16px;
-      border-radius: 999px;
       border: 1px solid var(--line);
       background: var(--card);
       color: var(--ink);
       cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .icon-btn {
+      width: 44px;
+      border-radius: 50%;
+      font: 600 18px "Space Grotesk", system-ui, sans-serif;
+    }
+    .lang {
+      padding: 0 16px;
+      border-radius: 999px;
       font: 500 14px "Space Grotesk", system-ui, sans-serif;
       letter-spacing: .08em;
     }
     .swatch-btn {
       width: 44px;
-      height: 44px;
       border-radius: 50%;
-      border: 1px solid var(--line);
-      background: var(--card);
-      cursor: pointer;
-      display: grid;
-      place-items: center;
     }
     .swatch-btn span {
       width: 18px;
@@ -98,7 +112,12 @@
       box-shadow: 0 14px 34px rgba(0, 0, 0, .18);
     }
     .tpanel .label { margin-bottom: 10px; }
-    .tlist { display: grid; gap: 4px; max-height: 60vh; overflow-y: auto; }
+    .tlist {
+      display: grid;
+      gap: 4px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
     .tbtn {
       display: flex;
       align-items: center;
@@ -124,74 +143,60 @@
       border: 1px solid rgba(128, 128, 128, .35);
     }
 
-    /* Cards */
-    .card {
+    /* Help modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(0, 0, 0, .45);
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+    .modal-box {
+      width: 100%;
+      max-width: 480px;
+      max-height: 88vh;
+      overflow-y: auto;
       background: var(--card);
+      color: var(--ink);
       border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 24px;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
     }
-    .label {
-      font-size: 12px;
-      letter-spacing: .12em;
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .modal-head h2 {
+      font: 700 22px "Doto", "Space Mono", monospace;
+      letter-spacing: .04em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 14px;
+      margin: 0;
     }
-
-    /* Hero */
-    .hero { display: grid; gap: 22px; justify-items: center; text-align: center; padding: 36px 24px 30px; }
-    .avatar {
-      width: 150px;
-      height: 150px;
+    .close {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      object-fit: cover;
       border: 1px solid var(--line);
       background: var(--chip);
+      color: var(--ink);
+      font-size: 18px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
     }
-    .hero h1 { font-size: clamp(40px, 11vw, 60px); margin: 0; text-transform: uppercase; }
-    .hero .role { margin: 0; color: var(--muted); font-size: 15px; max-width: 42ch; }
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 14px;
+    .guide {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 14px;
+      counter-reset: g;
     }
-    .status::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    /* Buttons */
-    .btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-    .btns.left { justify-content: flex-start; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 13px 22px;
-      border-radius: 999px;
-      border: 1px solid var(--ink);
-      background: var(--ink);
-      color: var(--bg);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: opacity .15s;
-    }
-    .btn:hover { opacity: .85; }
-    .btn.ghost { background: transparent; color: var(--ink); }
-    .btn.red { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    /* Guide */
-    .guide { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: g; }
     .guide li {
       counter-increment: g;
       display: grid;
@@ -211,8 +216,16 @@
       color: var(--accent);
       min-width: 26px;
     }
-    .guide h3 { margin: 0 0 4px; font-size: 16px; font-weight: 500; }
-    .guide p { margin: 0; color: var(--muted); font-size: 14px; }
+    .guide h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .guide p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
     .guide kbd {
       font: 500 12px "Space Grotesk", system-ui, sans-serif;
       border: 1px solid var(--line);
@@ -220,6 +233,99 @@
       padding: 1px 6px;
       background: var(--chip);
       color: var(--ink);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .label {
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      gap: 22px;
+      justify-items: center;
+      text-align: center;
+      padding: 36px 24px 30px;
+    }
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      background: var(--chip);
+    }
+    .hero h1 {
+      font-size: clamp(40px, 11vw, 60px);
+      margin: 0;
+      text-transform: uppercase;
+    }
+    .hero .role {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 42ch;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 14px;
+    }
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Buttons */
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btns.left { justify-content: flex-start; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn.ghost {
+      background: transparent;
+      color: var(--ink);
+    }
+    .btn.red {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
 
     /* Link rows */
@@ -254,7 +360,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .row .go { color: var(--muted); font-size: 18px; }
+    .row .go {
+      color: var(--muted);
+      font-size: 18px;
+    }
 
     /* Project */
     .proj-img {
@@ -267,7 +376,11 @@
       position: relative;
       overflow: hidden;
     }
-    .proj-img .dot { font-size: 42px; color: var(--ink); opacity: .9; }
+    .proj-img .dot {
+      font-size: 42px;
+      color: var(--ink);
+      opacity: .9;
+    }
     .proj-img::after {
       content: "";
       position: absolute;
@@ -278,11 +391,23 @@
       right: 18px;
       top: 18px;
     }
-    .proj h3 { margin: 16px 0 6px; font-size: 20px; font-weight: 500; }
-    .proj p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
+    .proj h3 {
+      margin: 16px 0 6px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .proj p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+    }
 
     /* Skills */
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
     .chip {
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -291,9 +416,16 @@
       color: var(--ink);
       background: var(--card);
     }
-    .chip.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .chip.on {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
 
-    .muted { margin: 0 0 16px; color: var(--muted); }
+    .muted {
+      margin: 0 0 16px;
+      color: var(--muted);
+    }
 
     footer {
       text-align: center;
@@ -315,6 +447,7 @@
     <header class="top">
       <span class="dot">Harry</span>
       <div class="top-right">
+        <button class="icon-btn" id="helpBtn" type="button" aria-label="Hướng dẫn sử dụng">?</button>
         <button class="lang" id="langBtn" type="button" aria-label="Change language">EN</button>
         <button class="swatch-btn" id="themeBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Theme">
           <span></span>
@@ -337,73 +470,55 @@
       </div>
     </section>
 
-    <section class="card">
-      <p class="label" data-i18n="guideLabel">Cách sử dụng</p>
-      <ol class="guide">
-        <li>
-          <div>
-            <h3 data-i18n="g1t">Xem thông tin</h3>
-            <p data-i18n="g1d">Phần đầu trang là giới thiệu ngắn. Bấm "Xem liên kết" để cuộn xuống danh sách mạng xã hội.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3 data-i18n="g2t">Kết nối với mình</h3>
-            <p data-i18n="g2d">Bấm vào từng dòng để mở Discord, Instagram, TikTok, GitHub, Zalo hoặc email. Các link mở ở tab mới.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3 data-i18n="g3t">Đổi ngôn ngữ</h3>
-            <p data-i18n="g3d">Bấm nút <kbd>EN</kbd> ở góc trên để xem bằng tiếng Anh, bấm <kbd>VI</kbd> để quay lại tiếng Việt. Trang nhớ lựa chọn của bạn.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3 data-i18n="g4t">Đổi giao diện</h3>
-            <p data-i18n="g4d">Bấm ô tròn màu ở góc trên, chọn một theme trong danh sách. Trang nhớ theme bạn đã chọn cho lần sau.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3 data-i18n="g5t">Xem dự án và liên hệ</h3>
-            <p data-i18n="g5d">Bấm "Xem mã nguồn" để mở FocusStudy trên GitHub. Muốn trao đổi công việc, bấm "Nhắn Zalo" hoặc "Gửi email".</p>
-          </div>
-        </li>
-      </ol>
-    </section>
-
     <section class="card" id="links">
       <p class="label" data-i18n="linksLabel">Kết nối</p>
       <nav class="rows" aria-label="Links">
         <a class="row" href="https://discord.gg/RA4uTrkU" target="_blank" rel="noopener">
           <span class="ico dot">DC</span>
-          <span class="txt"><span class="name">Discord</span><br><span class="sub" data-i18n="discordSub">Tham gia server</span></span>
+          <span class="txt">
+            <span class="name">Discord</span><br>
+            <span class="sub" data-i18n="discordSub">Tham gia server</span>
+          </span>
           <span class="go">→</span>
         </a>
         <a class="row" href="https://www.instagram.com/harry_real_channel" target="_blank" rel="noopener">
           <span class="ico dot">IG</span>
-          <span class="txt"><span class="name">Instagram</span><br><span class="sub">@harry_real_channel</span></span>
+          <span class="txt">
+            <span class="name">Instagram</span><br>
+            <span class="sub">@harry_real_channel</span>
+          </span>
           <span class="go">→</span>
         </a>
         <a class="row" href="https://www.tiktok.com/@harry_real_channel" target="_blank" rel="noopener">
           <span class="ico dot">TT</span>
-          <span class="txt"><span class="name">TikTok</span><br><span class="sub">@harry_real_channel</span></span>
+          <span class="txt">
+            <span class="name">TikTok</span><br>
+            <span class="sub">@harry_real_channel</span>
+          </span>
           <span class="go">→</span>
         </a>
         <a class="row" href="https://github.com/harryrealchannel-26" target="_blank" rel="noopener">
           <span class="ico dot">GH</span>
-          <span class="txt"><span class="name">GitHub</span><br><span class="sub">@harryrealchannel-26</span></span>
+          <span class="txt">
+            <span class="name">GitHub</span><br>
+            <span class="sub">@harryrealchannel-26</span>
+          </span>
           <span class="go">→</span>
         </a>
         <a class="row" href="https://zalo.me/0788319329" target="_blank" rel="noopener">
           <span class="ico dot">ZL</span>
-          <span class="txt"><span class="name">Zalo</span><br><span class="sub">0788 319 329</span></span>
+          <span class="txt">
+            <span class="name">Zalo</span><br>
+            <span class="sub">0788 319 329</span>
+          </span>
           <span class="go">→</span>
         </a>
         <a class="row" href="mailto:giaphuchuynh418@gmail.com">
           <span class="ico dot">@</span>
-          <span class="txt"><span class="name">Email</span><br><span class="sub">giaphuchuynh418@gmail.com</span></span>
+          <span class="txt">
+            <span class="name">Email</span><br>
+            <span class="sub">giaphuchuynh418@gmail.com</span>
+          </span>
           <span class="go">→</span>
         </a>
       </nav>
@@ -442,6 +557,48 @@
 
   </main>
 
+  <!-- Cửa sổ hướng dẫn -->
+  <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="helpTitle" data-i18n="guideLabel">Cách sử dụng</h2>
+        <button class="close" id="closeHelp" type="button" aria-label="Đóng">✕</button>
+      </div>
+      <ol class="guide">
+        <li>
+          <div>
+            <h3 data-i18n="g1t">Xem thông tin</h3>
+            <p data-i18n="g1d">Phần đầu trang là giới thiệu ngắn. Bấm "Xem liên kết" để cuộn xuống danh sách mạng xã hội.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g2t">Kết nối với mình</h3>
+            <p data-i18n="g2d">Bấm vào từng dòng để mở Discord, Instagram, TikTok, GitHub, Zalo hoặc email. Các link mở ở tab mới.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g3t">Đổi ngôn ngữ</h3>
+            <p data-i18n="g3d">Bấm nút <kbd>EN</kbd> ở góc trên để xem bằng tiếng Anh, bấm <kbd>VI</kbd> để quay lại tiếng Việt. Trang nhớ lựa chọn của bạn.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g4t">Đổi giao diện</h3>
+            <p data-i18n="g4d">Bấm ô tròn màu ở góc trên, chọn một theme trong danh sách. Trang nhớ theme bạn đã chọn cho lần sau.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="g5t">Xem dự án và liên hệ</h3>
+            <p data-i18n="g5d">Bấm "Xem mã nguồn" để mở FocusStudy trên GitHub. Muốn trao đổi công việc, bấm "Nhắn Zalo" hoặc "Gửi email".</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
   <script>
     (function () {
       var T = {
@@ -476,6 +633,8 @@
           themeTitle: 'Giao diện',
           themeLabel: 'Chọn giao diện',
           langLabel: 'Đổi sang tiếng Anh',
+          helpLabel: 'Hướng dẫn sử dụng',
+          closeLabel: 'Đóng',
           ariaLinks: 'Liên kết',
           ariaAvatar: 'Harry',
           nextLabel: 'EN'
@@ -511,6 +670,8 @@
           themeTitle: 'Theme',
           themeLabel: 'Choose theme',
           langLabel: 'Switch to Vietnamese',
+          helpLabel: 'How to use',
+          closeLabel: 'Close',
           ariaLinks: 'Links',
           ariaAvatar: 'Harry',
           nextLabel: 'VI'
@@ -535,6 +696,9 @@
       var themeBtn = document.getElementById('themeBtn');
       var tpanel = document.getElementById('tpanel');
       var tlist = document.getElementById('tlist');
+      var helpBtn = document.getElementById('helpBtn');
+      var helpModal = document.getElementById('helpModal');
+      var closeHelp = document.getElementById('closeHelp');
       var avatar = document.querySelector('.avatar');
       var navLinks = document.getElementById('links');
 
@@ -549,7 +713,9 @@
       }
 
       function findTheme(id) {
-        for (var k = 0; k < THEMES.length; k++) if (THEMES[k].id === id) return THEMES[k];
+        for (var k = 0; k < THEMES.length; k++) {
+          if (THEMES[k].id === id) return THEMES[k];
+        }
         return THEMES[0];
       }
 
@@ -597,7 +763,8 @@
         tlist.querySelectorAll('.tbtn').forEach(function (b) {
           var on = b.getAttribute('data-id') === themeId;
           b.classList.toggle('on', on);
-          if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+          if (on) b.setAttribute('aria-current', 'true');
+          else b.removeAttribute('aria-current');
         });
       }
 
@@ -605,6 +772,7 @@
         tpanel.hidden = false;
         themeBtn.setAttribute('aria-expanded', 'true');
       }
+
       function closePanel() {
         tpanel.hidden = true;
         themeBtn.setAttribute('aria-expanded', 'false');
@@ -612,13 +780,35 @@
 
       themeBtn.addEventListener('click', function (e) {
         e.stopPropagation();
-        if (tpanel.hidden) openPanel(); else closePanel();
+        if (tpanel.hidden) openPanel();
+        else closePanel();
       });
+
+      function openHelp() {
+        helpModal.hidden = false;
+        closeHelp.focus();
+      }
+
+      function closeHelpModal() {
+        helpModal.hidden = true;
+        helpBtn.focus();
+      }
+
+      helpBtn.addEventListener('click', openHelp);
+      closeHelp.addEventListener('click', closeHelpModal);
+      helpModal.addEventListener('click', function (e) {
+        if (e.target === helpModal) closeHelpModal();
+      });
+
       document.addEventListener('click', function (e) {
         if (!tpanel.hidden && !tpanel.contains(e.target) && e.target !== themeBtn) closePanel();
       });
+
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closePanel();
+        if (e.key === 'Escape') {
+          closePanel();
+          if (!helpModal.hidden) closeHelpModal();
+        }
       });
 
       function apply() {
@@ -631,6 +821,8 @@
         langBtn.textContent = d.nextLabel;
         langBtn.setAttribute('aria-label', d.langLabel);
         themeBtn.setAttribute('aria-label', d.themeLabel);
+        helpBtn.setAttribute('aria-label', d.helpLabel);
+        closeHelp.setAttribute('aria-label', d.closeLabel);
         avatar.setAttribute('alt', d.ariaAvatar);
         navLinks.setAttribute('aria-label', d.ariaLinks);
       }
