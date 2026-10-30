@@ -143,7 +143,7 @@
       border: 1px solid rgba(128, 128, 128, .35);
     }
 
-    /* Modals */
+    /* Help modal */
     .modal {
       position: fixed;
       inset: 0;
@@ -233,16 +233,6 @@
       padding: 1px 6px;
       background: var(--chip);
       color: var(--ink);
-    }
-    .task-text {
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-    .task-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
     }
 
     /* Cards */
@@ -541,7 +531,7 @@
       <h3>FocusStudy</h3>
       <p data-i18n="projDesc">Dự án học tập của mình trên GitHub. Mở mã nguồn để xem cách mình tổ chức code.</p>
       <div class="btns left">
-        <a class="btn js-project" href="https://github.com/harryrealchannel-26/FocusStudy" target="_blank" rel="noopener" data-i18n="projBtn">Xem mã nguồn</a>
+        <a class="btn" href="https://tasksub.io/oJ1ID" target="_blank" rel="noopener" data-i18n="projBtn">Xem mã nguồn</a>
       </div>
     </section>
 
@@ -567,21 +557,6 @@
     <footer>© Harry 2026</footer>
 
   </main>
-
-  <!-- Cửa sổ nhiệm vụ: mời theo dõi TikTok trước khi mở dự án -->
-  <div class="modal" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="taskTitle" hidden>
-    <div class="modal-box">
-      <div class="modal-head">
-        <h2 id="taskTitle" data-i18n="taskTitle">Nhiệm vụ nhỏ</h2>
-        <button class="close" id="closeTask" type="button" aria-label="Đóng">✕</button>
-      </div>
-      <p class="task-text" data-i18n="taskText">Theo dõi TikTok @harry_real_channel, rồi bấm "Tiếp tục" để mở dự án.</p>
-      <div class="task-actions">
-        <button class="btn red" id="taskFollow" type="button" data-i18n="taskFollow">Theo dõi TikTok</button>
-        <button class="btn" id="taskContinue" type="button" hidden data-i18n="taskContinue">Tiếp tục</button>
-      </div>
-    </div>
-  </div>
 
   <!-- Cửa sổ hướng dẫn -->
   <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
@@ -649,6 +624,7 @@
           projLabel: 'Dự án',
           projDesc: 'Dự án học tập của mình trên GitHub. Mở mã nguồn để xem cách mình tổ chức code.',
           projBtn: 'Xem mã nguồn',
+          supportBtn: 'Ủng hộ mình',
           skillsLabel: 'Kỹ năng',
           skill1: 'Thiết kế giao diện',
           skill4: 'Lập trình',
@@ -656,10 +632,6 @@
           workDesc: 'Có ý tưởng sản phẩm hoặc cần giao diện đẹp kèm code chạy được? Nhắn mình ngay.',
           zaloBtn: 'Nhắn Zalo',
           emailBtn: 'Gửi email',
-          taskTitle: 'Nhiệm vụ nhỏ',
-          taskText: 'Theo dõi TikTok @harry_real_channel, rồi bấm "Tiếp tục" để mở dự án.',
-          taskFollow: 'Theo dõi TikTok',
-          taskContinue: 'Tiếp tục',
           themeTitle: 'Giao diện',
           themeLabel: 'Chọn giao diện',
           langLabel: 'Đổi sang tiếng Anh',
@@ -690,6 +662,7 @@
           projLabel: 'Project',
           projDesc: 'A study project of mine on GitHub. Open the source code to see how I organize it.',
           projBtn: 'View source code',
+          supportBtn: 'Support me',
           skillsLabel: 'Skills',
           skill1: 'UI design',
           skill4: 'Programming',
@@ -697,10 +670,6 @@
           workDesc: 'Have a product idea or need a beautiful interface with working code? Message me.',
           zaloBtn: 'Message on Zalo',
           emailBtn: 'Send email',
-          taskTitle: 'Quick task',
-          taskText: 'Follow @harry_real_channel on TikTok, then tap "Continue" to open the project.',
-          taskFollow: 'Follow on TikTok',
-          taskContinue: 'Continue',
           themeTitle: 'Theme',
           themeLabel: 'Choose theme',
           langLabel: 'Switch to Vietnamese',
@@ -711,9 +680,6 @@
           nextLabel: 'VI'
         }
       };
-
-      var TIKTOK_URL = 'https://www.tiktok.com/@harry_real_channel';
-      var TASK_KEY = 'bio-task-tiktok';
 
       var THEMES = [
         { id: 'paper',      name: 'Paper',            dark: false, bg: '#F2F2F2', card: '#FFFFFF', ink: '#111111', muted: '#6B6B6B', line: '#E3E3E3', accent: '#D71921', chip: '#F5F5F5' },
@@ -736,14 +702,8 @@
       var helpBtn = document.getElementById('helpBtn');
       var helpModal = document.getElementById('helpModal');
       var closeHelp = document.getElementById('closeHelp');
-      var taskModal = document.getElementById('taskModal');
-      var closeTask = document.getElementById('closeTask');
-      var taskFollow = document.getElementById('taskFollow');
-      var taskContinue = document.getElementById('taskContinue');
       var avatar = document.querySelector('.avatar');
       var navLinks = document.getElementById('links');
-
-      var pendingUrl = null;
 
       var lang = 'vi';
       try { lang = localStorage.getItem('bio-lang') || 'vi'; } catch (e) {}
@@ -843,48 +803,6 @@
         if (e.target === helpModal) closeHelpModal();
       });
 
-      function hasFollowed() {
-        try { return localStorage.getItem(TASK_KEY) === '1'; } catch (e) { return false; }
-      }
-
-      function openTask() {
-        taskContinue.hidden = true;
-        taskModal.hidden = false;
-        taskFollow.focus();
-      }
-
-      function closeTaskModal() {
-        taskModal.hidden = true;
-        pendingUrl = null;
-      }
-
-      document.querySelectorAll('.js-project').forEach(function (el) {
-        el.addEventListener('click', function (e) {
-          if (hasFollowed()) return;
-          e.preventDefault();
-          pendingUrl = el.getAttribute('href');
-          openTask();
-        });
-      });
-
-      taskFollow.addEventListener('click', function () {
-        try { localStorage.setItem(TASK_KEY, '1'); } catch (e) {}
-        window.open(TIKTOK_URL, '_blank', 'noopener');
-        taskContinue.hidden = false;
-        taskContinue.focus();
-      });
-
-      taskContinue.addEventListener('click', function () {
-        var url = pendingUrl;
-        closeTaskModal();
-        if (url) window.open(url, '_blank', 'noopener');
-      });
-
-      closeTask.addEventListener('click', closeTaskModal);
-      taskModal.addEventListener('click', function (e) {
-        if (e.target === taskModal) closeTaskModal();
-      });
-
       document.addEventListener('click', function (e) {
         if (!tpanel.hidden && !tpanel.contains(e.target) && e.target !== themeBtn) closePanel();
       });
@@ -893,7 +811,6 @@
         if (e.key === 'Escape') {
           closePanel();
           if (!helpModal.hidden) closeHelpModal();
-          if (!taskModal.hidden) closeTaskModal();
         }
       });
 
@@ -909,7 +826,6 @@
         themeBtn.setAttribute('aria-label', d.themeLabel);
         helpBtn.setAttribute('aria-label', d.helpLabel);
         closeHelp.setAttribute('aria-label', d.closeLabel);
-        closeTask.setAttribute('aria-label', d.closeLabel);
         avatar.setAttribute('alt', d.ariaAvatar);
         navLinks.setAttribute('aria-label', d.ariaLinks);
       }
